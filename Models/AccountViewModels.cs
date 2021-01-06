@@ -64,6 +64,10 @@ namespace TP_PWEB.Models
 
     public class RegisterViewModel
     {
+
+        [Display(Name = "Nome completo")]
+        public string NomeCompleto { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
