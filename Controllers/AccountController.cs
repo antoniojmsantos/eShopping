@@ -158,13 +158,17 @@ namespace TP_PWEB.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(model.SelectedRole == "Cliente")
+                var userManager = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+
+                if (model.SelectedRole == "Cliente")
                 {
                     var user = new ApplicationUser { NomeCompleto = model.NomeCompleto, UserName = model.Email, Email = model.Email };
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                        userManager.AddToRole(user.Id, "Cliente");
 
                         // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                         // Send an email with this link
@@ -178,11 +182,14 @@ namespace TP_PWEB.Controllers
                 }
                 else if(model.SelectedRole == "Empresa")
                 {
-                    var user = new ApplicationUser { NomeCompleto = model.NomeCompleto, UserName = model.Email, Email = model.Email };
+                    var user = new ApplicationUser { NomeCompleto = model.NomeCompleto, UserName = model.Email, Email = model.Email};
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                        userManager.AddToRole(user.Id,"Empresa");
+  
 
                         // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                         // Send an email with this link

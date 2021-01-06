@@ -12,10 +12,10 @@ namespace TP_PWEB
     [Authorize(Roles = "Admin")]
     public class UsersAdminController : Controller
     {
-        ApplicationDbContext context;
+        ApplicationDbContext db;
         public UsersAdminController()
         {
-            context = new ApplicationDbContext();
+            db = new ApplicationDbContext();
         }
 
         public UsersAdminController(ApplicationUserManager userManager, ApplicationRoleManager roleManager)
@@ -54,6 +54,12 @@ namespace TP_PWEB
         // GET: /Users/
         public async Task<ActionResult> Index()
         {
+            var registerRoles = db.Roles.Where(r => r.Name.Equals("Cliente") || r.Name.Equals("Empresa")).Select(rr =>
+               new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+
+
+            ViewBag.Roles = registerRoles;
+
             return View(await UserManager.Users.ToListAsync());
         }
 
@@ -77,7 +83,7 @@ namespace TP_PWEB
         public ActionResult Create()
         {
             //Get the list of Roles
-            ViewBag.RoleId = new SelectList(context.Roles.ToList(), "Name", "Name");
+            ViewBag.RoleId = new SelectList(db.Roles.ToList(), "Name", "Name");
             return View();
         }
 
