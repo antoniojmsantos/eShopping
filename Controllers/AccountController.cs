@@ -188,6 +188,9 @@ namespace TP_PWEB.Controllers
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
+                        //CRIA UMA EMPRESA
+
+
                         userManager.AddToRole(user.Id,"Empresa");
   
 
