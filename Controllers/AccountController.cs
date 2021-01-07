@@ -162,7 +162,7 @@ namespace TP_PWEB.Controllers
 
                 if (model.SelectedRole == "Cliente")
                 {
-                    var user = new ApplicationUser { NomeCompleto = model.NomeCompleto, UserName = model.Email, Email = model.Email };
+                    var user = new ApplicationUser { Nome = model.Nome, UserName = model.Email, Email = model.Email };
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
@@ -182,21 +182,19 @@ namespace TP_PWEB.Controllers
                 }
                 else if(model.SelectedRole == "Empresa")
                 {
-                    var user = new ApplicationUser { NomeCompleto = model.NomeCompleto, UserName = model.Email, Email = model.Email};
+                    var user = new ApplicationUser { Nome = model.Nome, UserName = model.Email, Email = model.Email};
 
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
 
-                        var empresa = new Empresa { nomeEmpresa = model.NomeEmpresa, Id = user.Id };
+                        var empresa = new Empresa { Id = user.Id };
 
                         db.dbSetEmpresas.Add(empresa);
                         db.SaveChanges();
 
                         userManager.AddToRole(user.Id, "Empresa");
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                        //CRIA UMA EMPRESA
                         
 
                         // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771

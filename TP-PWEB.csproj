@@ -189,11 +189,17 @@
     <Compile Include="Migrations\202101070043554_empresas_extension1.Designer.cs">
       <DependentUpon>202101070043554_empresas_extension1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101071614528_empresas_update.cs" />
+    <Compile Include="Migrations\202101071614528_empresas_update.Designer.cs">
+      <DependentUpon>202101071614528_empresas_update.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Compra.cs" />
     <Compile Include="Models\Empresa.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Produto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -280,6 +286,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101070043554_empresas_extension1.resx">
       <DependentUpon>202101070043554_empresas_extension1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101071614528_empresas_update.resx">
+      <DependentUpon>202101071614528_empresas_update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

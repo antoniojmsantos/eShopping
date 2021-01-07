@@ -69,11 +69,8 @@ namespace TP_PWEB.Models
         [Display(Name = "Tipo de conta")]
         public string SelectedRole { get; set; }
 
-        [Display(Name = "Nome Empresa")]
-        public string NomeEmpresa { get; set; }
-
-        [Display(Name = "Nome completo")]
-        public string NomeCompleto { get; set; }
+        [Display(Name = "Nome")]
+        public string Nome { get; set; }
 
         [Required]
         [EmailAddress]

@@ -10,8 +10,8 @@ namespace TP_PWEB.Models
     {
         [Key]
         public int idEmpresa { get; set; }
-        [Display(Name = "Empresa")]
-        public string nomeEmpresa { get; set; }
+        //[Display(Name = "Empresa")]
+        //public string nomeEmpresa { get; set; }
 
         public string Id { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
