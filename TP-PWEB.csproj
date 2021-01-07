@@ -181,8 +181,17 @@
     <Compile Include="Migrations\202101060300537_InitialCreate.Designer.cs">
       <DependentUpon>202101060300537_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101070037297_empresas_extension.cs" />
+    <Compile Include="Migrations\202101070037297_empresas_extension.Designer.cs">
+      <DependentUpon>202101070037297_empresas_extension.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101070043554_empresas_extension1.cs" />
+    <Compile Include="Migrations\202101070043554_empresas_extension1.Designer.cs">
+      <DependentUpon>202101070043554_empresas_extension1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Empresa.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -265,6 +274,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202101060300537_InitialCreate.resx">
       <DependentUpon>202101060300537_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101070037297_empresas_extension.resx">
+      <DependentUpon>202101070037297_empresas_extension.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101070043554_empresas_extension1.resx">
+      <DependentUpon>202101070043554_empresas_extension1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

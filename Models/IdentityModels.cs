@@ -26,6 +26,7 @@ namespace TP_PWEB.Models
             : base("eShopping_Connection", throwIfV1Schema: false)
         {
         }
+        public DbSet<Empresa> dbSetEmpresas { get; set; } 
 
         public static ApplicationDbContext Create()
         {

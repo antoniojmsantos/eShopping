@@ -108,3 +108,5 @@ C:\Users\antoniosantos\Desktop\TP-PWEB\TP-PWEB\obj\Debug\TP-PWEB.dll
 C:\Users\antoniosantos\Desktop\TP-PWEB\TP-PWEB\obj\Debug\TP-PWEB.pdb
 C:\Users\antoniosantos\Desktop\TP-PWEB\TP-PWEB\obj\Debug\TP_PWEB.Migrations.InitialCreate.resources
 C:\Users\antoniosantos\Desktop\TP-PWEB\TP-PWEB\obj\Debug\TP-PWEB.csproj.GenerateResource.cache
+C:\Users\antoniosantos\Desktop\TP-PWEB\TP-PWEB\obj\Debug\TP_PWEB.Migrations.empresas_extension.resources
+C:\Users\antoniosantos\Desktop\TP-PWEB\TP-PWEB\obj\Debug\TP_PWEB.Migrations.empresas_extension1.resources
