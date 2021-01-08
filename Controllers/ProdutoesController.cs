@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using TP_PWEB.Models;
 
+using Microsoft.AspNet.Identity;
+
 namespace TP_PWEB.Controllers
 {
     public class ProdutoesController : Controller
@@ -17,8 +19,23 @@ namespace TP_PWEB.Controllers
         // GET: Produtoes
         public ActionResult Index()
         {
-            var produtos = db.Produtos.Include(p => p.Empresa);
-            return View(produtos.ToList());
+            List<Produto> produtos;
+
+            if (User.IsInRole("Empresa"))
+			{
+                var userId = User.Identity.GetUserId();
+                var empresaId = db.Empresas.Where(e => e.ApplicationUserId.Equals(userId)).FirstOrDefault().IdEmpresa;
+
+                produtos = db.Produtos
+                    .Include(p => p.Empresa)
+                    .Where(p => p.IdEmpresa == empresaId)
+                    .ToList();
+
+                return View(produtos);
+            }
+
+            produtos = db.Produtos.Include(p => p.Empresa).ToList();
+            return View(produtos);
         }
 
         // GET: Produtoes/Details/5
@@ -36,6 +53,7 @@ namespace TP_PWEB.Controllers
             return View(produto);
         }
 
+        [Authorize(Roles ="Empresa")]
         // GET: Produtoes/Create
         public ActionResult Create()
         {
@@ -48,10 +66,13 @@ namespace TP_PWEB.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdProduto,Nome,Preco,IdEmpresa")] Produto produto)
+        public ActionResult Create([Bind(Include = "IdProduto,Nome,Preco")] Produto produto)
         {
             if (ModelState.IsValid)
             {
+                var userId = User.Identity.GetUserId();
+
+                produto.IdEmpresa = db.Empresas.Where(e => e.ApplicationUserId == userId).FirstOrDefault().IdEmpresa;
                 db.Produtos.Add(produto);
                 db.SaveChanges();
                 return RedirectToAction("Index");

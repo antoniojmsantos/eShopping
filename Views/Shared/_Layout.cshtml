@@ -21,9 +21,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Catalogo de Produtos", "Produtos", "ProductsCatalog")</li>
+                    <li>@Html.ActionLink("Produtos", "Index", "Produtoes")</li>
 
-                    @if (User.IsInRole("Admin"))
+                    @*@if (User.IsInRole("Admin"))
                     {
                         
                         <li>@Html.ActionLink("Gestão de Roles", "Index", "RolesAdmin")</li>
@@ -46,7 +46,7 @@
                     @if (User.IsInRole("Cliente"))
                     {
                         <li>@Html.ActionLink("Histórico de Reservas", "Funcionarios", "GestFunc")</li>
-                    }
+                    }*@
 
                 </ul>
                 @Html.Partial("_LoginPartial")
