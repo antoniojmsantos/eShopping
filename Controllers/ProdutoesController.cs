@@ -24,13 +24,18 @@ namespace TP_PWEB.Controllers
             if (User.IsInRole("Empresa"))
 			{
                 var userId = User.Identity.GetUserId();
-                var empresaId = db.Empresas.Where(e => e.ApplicationUserId.Equals(userId)).FirstOrDefault().IdEmpresa;
+                var empresa = db.Empresas.Where(e => e.ApplicationUserId == userId).FirstOrDefault();
+                if (empresa != null) {
 
-                produtos = db.Produtos
-                    .Include(p => p.Empresa)
-                    .Where(p => p.IdEmpresa == empresaId)
-                    .ToList();
+                    produtos = db.Produtos
+                        .Include(p => p.Empresa)
+                        .Where(p => p.IdEmpresa == empresa.IdEmpresa)
+                        .ToList();
 
+                    return View(produtos);
+                }
+
+                produtos = db.Produtos.Include(p => p.Empresa).ToList();
                 return View(produtos);
             }
 
@@ -66,13 +71,22 @@ namespace TP_PWEB.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdProduto,Nome,Preco")] Produto produto)
+        public ActionResult Create([Bind(Include = "IdProduto,Nome,Preco, UnidadesEmStock")] Produto produto)
         {
             if (ModelState.IsValid)
             {
                 var userId = User.Identity.GetUserId();
-
                 produto.IdEmpresa = db.Empresas.Where(e => e.ApplicationUserId == userId).FirstOrDefault().IdEmpresa;
+                
+                if (produto.UnidadesEmStock == 0)
+				{
+                    produto.EmStock = false;
+				}
+                else
+				{
+                    produto.EmStock = true;
+				}
+
                 db.Produtos.Add(produto);
                 db.SaveChanges();
                 return RedirectToAction("Index");
