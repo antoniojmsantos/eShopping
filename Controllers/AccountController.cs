@@ -166,9 +166,9 @@ namespace TP_PWEB.Controllers
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
                         userManager.AddToRole(user.Id, "Cliente");
+
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                         // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                         // Send an email with this link
@@ -180,22 +180,20 @@ namespace TP_PWEB.Controllers
                     }
                     AddErrors(result);
                 }
-                else if(model.SelectedRole == "Empresa")
+                else if (model.SelectedRole == "Empresa")
                 {
-                    var user = new ApplicationUser { Nome = model.Nome, UserName = model.Email, Email = model.Email};
+                    var user = new ApplicationUser { Nome = model.Nome, UserName = model.Email, Email = model.Email };
 
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
-
-                        var empresa = new Empresa { Id = user.Id };
-
-                        db.dbSetEmpresas.Add(empresa);
-                        db.SaveChanges();
-
                         userManager.AddToRole(user.Id, "Empresa");
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        
+
+                        var empresa = new Empresa { ApplicationUserId = user.Id };
+
+                        db.Empresas.Add(empresa);
+                        db.SaveChanges();
 
                         // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                         // Send an email with this link
@@ -208,9 +206,9 @@ namespace TP_PWEB.Controllers
                     AddErrors(result);
                 }
 
-                
-                
-            }
+
+
+        }
 
             // If we got this far, something failed, redisplay form
             return View(model);

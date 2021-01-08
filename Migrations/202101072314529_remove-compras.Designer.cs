@@ -6,14 +6,14 @@ namespace TP_PWEB.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class empresas_extension1 : IMigrationMetadata
+    [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
+    public sealed partial class removecompras : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(empresas_extension1));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(removecompras));
         
         string IMigrationMetadata.Id
         {
-            get { return "202101070043554_empresas_extension1"; }
+            get { return "202101072314529_remove-compras"; }
         }
         
         string IMigrationMetadata.Source

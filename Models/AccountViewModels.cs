@@ -65,7 +65,7 @@ namespace TP_PWEB.Models
 
     public class RegisterViewModel
     {
-        [Required]
+        //[Required]
         [Display(Name = "Tipo de conta")]
         public string SelectedRole { get; set; }
 
