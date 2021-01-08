@@ -112,5 +112,8 @@ C:\Users\antoniosantos\Desktop\TP-PWEB\TP-PWEB\obj\Debug\TP_PWEB.Migrations.empr
 C:\Users\antoniosantos\Desktop\TP-PWEB\TP-PWEB\obj\Debug\TP_PWEB.Migrations.removecompras.resources
 C:\Users\antoniosantos\Desktop\TP-PWEB\TP-PWEB\obj\Debug\TP_PWEB.Migrations.userfix.resources
 C:\Users\antoniosantos\Desktop\TP-PWEB\TP-PWEB\obj\Debug\TP_PWEB.Migrations.compra.resources
-C:\Users\antoniosantos\Desktop\TP-PWEB\TP-PWEB\obj\Debug\TP-PWEB.csprojAssemblyReference.cache
 C:\Users\antoniosantos\Desktop\TP-PWEB\TP-PWEB\obj\Debug\TP_PWEB.Migrations.userid.resources
+C:\Users\antoniosantos\Desktop\TP-PWEB\TP-PWEB\obj\Debug\TP_PWEB.Migrations.empresasUsers.resources
+C:\Users\antoniosantos\Desktop\TP-PWEB\TP-PWEB\obj\Debug\TP_PWEB.Migrations.empresasUsers1.resources
+C:\Users\antoniosantos\Desktop\TP-PWEB\TP-PWEB\obj\Debug\TP-PWEB.csprojAssemblyReference.cache
+C:\Users\antoniosantos\Desktop\TP-PWEB\TP-PWEB\obj\Debug\TP_PWEB.Migrations.usersupdate.resources

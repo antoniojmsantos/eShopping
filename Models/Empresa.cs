@@ -11,6 +11,7 @@ namespace TP_PWEB.Models
     {
         [Key]
         public int IdEmpresa { get; set; }
+        public string NomeEmpresa { get; set; }
 
         public string ApplicationUserId { get; set; }
         [ForeignKey("ApplicationUserId")]
