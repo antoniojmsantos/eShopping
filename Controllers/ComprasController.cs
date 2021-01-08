@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using TP_PWEB.Models;
 
+using Microsoft.AspNet.Identity;
+
 namespace TP_PWEB.Controllers
 {
     public class ComprasController : Controller
@@ -17,8 +19,21 @@ namespace TP_PWEB.Controllers
         // GET: Compras
         public ActionResult Index()
         {
-            var compras = db.Compras.Include(c => c.Produto);
-            return View(compras.ToList());
+            List<Compra> compras;
+
+            if (User.IsInRole("Cliente"))
+			{
+                var userId = User.Identity.GetUserId();
+
+                compras = db.Compras
+                    .Include(p => p.Produto)
+                    .Where(p => p.ApplicationUserId == userId)
+                    .ToList();
+
+                return View(compras);
+			}
+			compras = db.Compras.Include(c => c.Produto).ToList();
+			return View(compras);
         }
 
         // GET: Compras/Details/5
@@ -37,10 +52,25 @@ namespace TP_PWEB.Controllers
         }
 
         // GET: Compras/Create
-        public ActionResult Create()
+        [Authorize(Roles = "Cliente")]
+        public ActionResult Create(int? id)
         {
-            ViewBag.IdProduto = new SelectList(db.Produtos, "IdProduto", "Nome");
-            return View();
+            if (id != null)
+			{
+                var produto = db.Produtos.Where(p => p.IdProduto == id).FirstOrDefault();
+                if (produto != null)
+				{
+                    ViewBag.Produto = produto;
+                    return View();
+				} else
+				{
+                    return RedirectToAction("Index", "Produtoes");
+                }
+                //ViewBag.IdProduto = new SelectList(db.Produtos.Where(p => p.IdProduto == id), "IdProduto", "Nome");
+			}
+
+            return RedirectToAction("Index", "Produtoes");
+
         }
 
         // POST: Compras/Create
@@ -48,10 +78,11 @@ namespace TP_PWEB.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdCompra,IdProduto")] Compra compra)
+        public ActionResult Create([Bind(Include = "IdCompra,IdProduto, Unidades")] Compra compra)
         {
             if (ModelState.IsValid)
             {
+                compra.ApplicationUserId = User.Identity.GetUserId();
                 db.Compras.Add(compra);
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -1,42 +1,70 @@
 ﻿@model TP_PWEB.Models.Produto
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Produto: " + Model.Nome;
 }
-
-<h2>Details</h2>
-
+<h2>@Model.Nome</h2>
 <div>
     <h4>Produto</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Empresa.Id)
-        </dt>
+    <hr/>
+	<dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.Nome)
+		</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Empresa.Id)
-        </dd>
+		<dd>
+			@Html.DisplayFor(model => model.Nome)
+		</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
+		<dt>
+			Vendido por
+		</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
+		<dd>
+			@Html.DisplayFor(model => model.Empresa.NomeEmpresa)
+		</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Preco)
-        </dt>
+		<dt>
+			@Html.DisplayNameFor(model => model.Preco)
+		</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Preco)
-        </dd>
+		<dd>
+			@Html.DisplayFor(model => model.Preco)
+		</dd>
 
-    </dl>
+		<dt>
+			@Html.DisplayNameFor(model => model.EmStock)
+		</dt>
+
+		<dd>
+			@if (Model.EmStock)
+			{
+				<p style="color: green;">Sim</p>
+			}
+			else
+			{
+				<p style="color: red;">Não</p>
+			}
+		</dd>
+
+		@if (Model.EmStock)
+		{
+			<dt>
+				@Html.DisplayNameFor(model => model.UnidadesEmStock)
+			</dt>
+
+			<dd>
+				@Html.DisplayFor(model => model.UnidadesEmStock)
+			</dd>
+		}
+
+	</dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.IdProduto }) |
-    @Html.ActionLink("Back to List", "Index")
+	@if (User.IsInRole("Empresa"))
+	{
+		@Html.ActionLink("Edit", "Edit", new { id = Model.IdProduto })
+	}
+
+	@Html.ActionLink("Back to List", "Index")
 </p>

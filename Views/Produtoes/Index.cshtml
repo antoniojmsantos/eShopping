@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<TP_PWEB.Models.Produto>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Catálogo de Produtos";
 }
 
-<h2>Index</h2>
+<h2>Catálogo de Produtos</h2>
 
 @if (User.IsInRole("Empresa"))
 {
@@ -13,18 +13,24 @@
 	</p>
 }
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nome)
-        </th>
+	<tr>
 		<th>
-			@Html.DisplayNameFor(model => model.Empresa.NomeEmpresa)
+			Produto
 		</th>
-        <th>
-            @Html.DisplayNameFor(model => model.Preco)
-        </th>
-        <th></th>
-    </tr>
+		<th>
+			Vendido por
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.EmStock)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.UnidadesEmStock)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Preco)
+		</th>
+		<th></th>
+	</tr>
 
 @foreach (var item in Model) {
 <tr>
@@ -35,14 +41,60 @@
 		@Html.DisplayFor(modelItem => item.Empresa.NomeEmpresa)
 	</td>
 	<td>
+		@if (item.EmStock)
+		{
+			<p style="color: green;">Sim</p>
+		}
+		else
+		{
+			<p style="color: red;">Não</p>
+		}
+	</td>
+	<td>
+		x @Html.DisplayFor(modelItem => item.UnidadesEmStock)
+	</td>
+	<td>
 		@Html.DisplayFor(modelItem => item.Preco)
 	</td>
 
 	@if (User.IsInRole("Cliente"))
 	{
 		<td>
-			@Html.ActionLink("Edit", "Edit", new { id = item.IdProduto }) |
 			@Html.ActionLink("Details", "Details", new { id = item.IdProduto }) |
+			
+			@if (item.EmStock)
+			{
+				@Html.ActionLink(
+					linkText: "Comprar",
+					actionName: "Create",
+					controllerName: "Compras",
+					routeValues: new
+					{
+						id = item.IdProduto
+					},
+					htmlAttributes: null)
+			}
+			else
+			{
+				// button is disabled
+			}
+
+		</td>
+	}
+
+	@if (User.IsInRole("Funcionario"))
+	{
+		// criar promoção
+		<td>
+			@Html.ActionLink("Details", "Details", new { id = item.IdProduto })
+		</td>
+	}
+
+	@if (User.IsInRole("Empresa"))
+	{
+		<td>
+			@Html.ActionLink("Edit", "Edit", new { id = item.IdProduto }) |
+			@Html.ActionLink("Details", "Details", new { id = item.IdProduto })
 			@Html.ActionLink("Delete", "Delete", new { id = item.IdProduto })
 		</td>
 	}
