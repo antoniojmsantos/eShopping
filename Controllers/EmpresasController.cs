@@ -7,111 +7,125 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TP_PWEB.Models;
+using Microsoft.AspNet.Identity;
 
 namespace TP_PWEB.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    public class CategoriasController : Controller
+    
+    public class EmpresasController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Categorias
+        // GET: Empresas
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
-            return View(db.Categorias.ToList());
+            var empresas = db.Empresas.Include(e => e.ApplicationUser);
+            return View(empresas.ToList());
         }
 
-        // GET: Categorias/Details/5
+        // GET: Empresas/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Categoria categoria = db.Categorias.Find(id);
-            if (categoria == null)
+            Empresa empresa = db.Empresas.Find(id);
+            if (empresa == null)
             {
                 return HttpNotFound();
             }
-            return View(categoria);
+            return View(empresa);
         }
 
-        // GET: Categorias/Create
+        // GET: Empresas/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
+            //ViewBag.ApplicationUserId = new SelectList(db.ApplicationUsers, "Id", "NomeCompleto");
             return View();
         }
 
-        // POST: Categorias/Create
+        // POST: Empresas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdCategoria,NomeCategoria")] Categoria categoria)
+        [Authorize(Roles = "Admin")]
+        public ActionResult Create([Bind(Include = "IdEmpresa,NomeEmpresa,ApplicationUserId")] Empresa empresa)
         {
             if (ModelState.IsValid)
             {
-                db.Categorias.Add(categoria);
+                db.Empresas.Add(empresa);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(categoria);
+            //ViewBag.ApplicationUserId = new SelectList(db.ApplicationUsers, "Id", "NomeCompleto", empresa.ApplicationUserId);
+            return View(empresa);
         }
 
-        // GET: Categorias/Edit/5
+        // GET: Empresas/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Categoria categoria = db.Categorias.Find(id);
-            if (categoria == null)
+            Empresa empresa = db.Empresas.Find(id);
+            if (empresa == null)
             {
                 return HttpNotFound();
             }
-            return View(categoria);
+            //ViewBag.ApplicationUserId = new SelectList(db.ApplicationUsers, "Id", "NomeCompleto", empresa.ApplicationUserId);
+            return View(empresa);
         }
 
-        // POST: Categorias/Edit/5
+        // POST: Empresas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdCategoria,NomeCategoria")] Categoria categoria)
+        [Authorize(Roles = "Admin")]
+        public ActionResult Edit([Bind(Include = "IdEmpresa,NomeEmpresa,ApplicationUserId")] Empresa empresa)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(categoria).State = EntityState.Modified;
+                db.Entry(empresa).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(categoria);
+            //ViewBag.ApplicationUserId = new SelectList(db.ApplicationUsers, "Id", "NomeCompleto", empresa.ApplicationUserId);
+            return View(empresa);
         }
 
-        // GET: Categorias/Delete/5
+        // GET: Empresas/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Categoria categoria = db.Categorias.Find(id);
-            if (categoria == null)
+            Empresa empresa = db.Empresas.Find(id);
+            if (empresa == null)
             {
                 return HttpNotFound();
             }
-            return View(categoria);
+            return View(empresa);
         }
 
-        // POST: Categorias/Delete/5
+        // POST: Empresas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+
         public ActionResult DeleteConfirmed(int id)
         {
-            Categoria categoria = db.Categorias.Find(id);
-            db.Categorias.Remove(categoria);
+            Empresa empresa = db.Empresas.Find(id);
+            db.Empresas.Remove(empresa);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -123,6 +137,16 @@ namespace TP_PWEB.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        [Authorize(Roles = "Empresa")]
+        public ActionResult Estatisticas()
+        {
+            var userId = User.Identity.GetUserId();
+
+            var empresa = db.Empresas.Where(e => e.ApplicationUserId == userId).FirstOrDefault();
+
+            return View(empresa);
         }
     }
 }

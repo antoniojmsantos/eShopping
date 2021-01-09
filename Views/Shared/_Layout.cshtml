@@ -21,37 +21,30 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Produtos", "Index", "Produtoes")</li>
+
+                    <li>@Html.ActionLink("Catálogo de Produtos", "Index", "Produtoes")</li>
 
                     @if (User.IsInRole("Cliente"))
 					{
                         <li>@Html.ActionLink("Histórico de Compras", "Index", "Compras")</li>
 					}
 
-                    @*@if (User.IsInRole("Admin"))
+                    @if (User.IsInRole("Admin"))
                     {
-                        
-                        <li>@Html.ActionLink("Gestão de Roles", "Index", "RolesAdmin")</li>
-                        <li>@Html.ActionLink("Gestão de Utilizadores", "Index", "UsersAdmin")</li>
+                        <li>@Html.ActionLink("Gestão de Clientes", "IndexClientes", "Utilizadores")</li>
                         <li>@Html.ActionLink("Gestão de Empresas", "Index", "Empresas")</li>
-                        <li>@Html.ActionLink("Gestão de Utilizadores", "Index", "UsersAdmin")</li>
-                        <li>@Html.ActionLink("Gestão de Categorias", "Index", "UsersAdmin")</li>
+                        <li>@Html.ActionLink("Gestão de Categorias", "Index", "Categorias")</li>
                     }
                     @if (User.IsInRole("Empresa"))
                     {
-                        <li>@Html.ActionLink("Gestão de Funcionários", "Funcionarios", "GestFunc")</li>
-                        <li>@Html.ActionLink("Gestão do Catálogo", "Funcionarios", "GestFunc")</li>
-                        <li>@Html.ActionLink("Estatísticas", "Funcionarios", "GestFunc")</li>
+                        <li>@Html.ActionLink("Gestão de Funcionários", "IndexFuncionarios", "Utilizadores")</li>
+                        <li>@Html.ActionLink("Estatísticas", "Estatisticas", "Empresas")</li>
                     }
                     @if (User.IsInRole("Funcionario"))
                     {
-                        <li>@Html.ActionLink("Gestão de Compras", "Funcionarios", "GestFunc")</li>
-                        <li>@Html.ActionLink("Promoções", "Funcionarios", "GestFunc")</li>
+                        <li>@Html.ActionLink("Gestão de Compras", "Index", "Compras")</li>
+                        @*<li>@Html.ActionLink("Promoções", "Index", "Promocoes")</li>*@
                     }
-                    @if (User.IsInRole("Cliente"))
-                    {
-                        <li>@Html.ActionLink("Histórico de Reservas", "Funcionarios", "GestFunc")</li>
-                    }*@
 
                 </ul>
                 @Html.Partial("_LoginPartial")

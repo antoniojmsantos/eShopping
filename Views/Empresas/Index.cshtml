@@ -1,0 +1,41 @@
+﻿@model IEnumerable<TP_PWEB.Models.Empresa>
+
+@{
+    ViewBag.Title = "Lista de Empresas";
+}
+
+<h2>Lista de Empresas</h2>
+
+<p>
+    @Html.ActionLink("Criar Nova", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NomeEmpresa)
+            
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ApplicationUser.Email)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NomeEmpresa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ApplicationUser.Email)
+            
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.IdEmpresa }) |
+            @Html.ActionLink("Detalhes", "Details", new { id=item.IdEmpresa }) |
+            @Html.ActionLink("Apagar", "Delete", new { id=item.IdEmpresa })
+        </td>
+    </tr>
+}
+
+</table>

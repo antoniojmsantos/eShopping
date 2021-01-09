@@ -28,6 +28,11 @@ namespace TP_PWEB.Models
         public bool EmStock { get; set; }
 
 
+        [Display(Name = "Categoria")]
+        public int IdCategoria { get; set; }
+        public virtual Categoria Categoria { get; set; }
+
+        [Display(Name = "Empresa")]
         public int IdEmpresa { get; set; }
         public virtual Empresa Empresa { get; set; }
     }
