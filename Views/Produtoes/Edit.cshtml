@@ -1,20 +1,18 @@
 ﻿@model TP_PWEB.Models.Produto
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Editar Produto";
 }
-
-<h2>Edit</h2>
-
+<h2>Editar Produto</h2>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Produto</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.IdProduto)
+        @Html.HiddenFor(model => model.IdEmpresa)
 
         <div class="form-group">
             @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -33,10 +31,20 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.IdEmpresa, "IdEmpresa", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.UnidadesEmStock, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("IdEmpresa", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IdEmpresa, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.UnidadesEmStock, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UnidadesEmStock, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EmStock, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.EmStock)
+                    @Html.ValidationMessageFor(model => model.EmStock, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
 

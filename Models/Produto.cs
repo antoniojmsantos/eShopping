@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace TP_PWEB.Models
 {
@@ -17,7 +18,7 @@ namespace TP_PWEB.Models
 
         [Required]
         [Display(Name="Preço p/ unidade")]
-        public float Preco { get; set; }
+        public decimal Preco { get; set; }
 
         [Required]
         [Display(Name="Unidades em stock")]

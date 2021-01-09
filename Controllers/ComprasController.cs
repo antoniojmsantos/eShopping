@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity;
 
 namespace TP_PWEB.Controllers
 {
+    [Authorize(Roles ="Cliente")]
     public class ComprasController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -78,11 +79,13 @@ namespace TP_PWEB.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdCompra,IdProduto, Unidades")] Compra compra)
+        public ActionResult Create([Bind(Include = "IdCompra,IdProduto,Unidades")] Compra compra)
         {
             if (ModelState.IsValid)
             {
                 compra.ApplicationUserId = User.Identity.GetUserId();
+                compra.Estado = Estado.PENDENTE;
+                compra.DataPedido = DateTime.Now;
                 db.Compras.Add(compra);
                 db.SaveChanges();
                 return RedirectToAction("Index");

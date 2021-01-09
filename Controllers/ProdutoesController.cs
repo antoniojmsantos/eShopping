@@ -71,7 +71,7 @@ namespace TP_PWEB.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdProduto,Nome,Preco, UnidadesEmStock")] Produto produto)
+        public ActionResult Create([Bind(Include = "IdProduto,Nome,Preco,UnidadesEmStock")] Produto produto)
         {
             if (ModelState.IsValid)
             {
@@ -104,11 +104,12 @@ namespace TP_PWEB.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Produto produto = db.Produtos.Find(id);
+
             if (produto == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.IdEmpresa = new SelectList(db.Empresas, "IdEmpresa", "Id", produto.IdEmpresa);
+
             return View(produto);
         }
 
@@ -117,7 +118,7 @@ namespace TP_PWEB.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdProduto,Nome,Preco,IdEmpresa")] Produto produto)
+        public ActionResult Edit([Bind(Include = "IdProduto,Nome,Preco,IdEmpresa,UnidadesEmStock, EmStock")] Produto produto)
         {
             if (ModelState.IsValid)
             {
