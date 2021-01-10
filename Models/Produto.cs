@@ -32,7 +32,7 @@ namespace TP_PWEB.Models
         public int IdCategoria { get; set; }
         public virtual Categoria Categoria { get; set; }
 
-        [Display(Name = "Empresa")]
+        [Display(Name = "IdEmpresa")]
         public int IdEmpresa { get; set; }
         public virtual Empresa Empresa { get; set; }
     }

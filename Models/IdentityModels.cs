@@ -32,12 +32,17 @@ namespace TP_PWEB.Models
         public DbSet<Empresa> Empresas { get; set; }
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
+<<<<<<< HEAD
         public DbSet<Promocao> Promocaos { get; set; }
+=======
+        public DbSet<Compra> Compras { get; set; }
+        public DbSet<Promocao> Promocao { get; set; }
+        public DbSet<Funcionario> Funcionarios { get; set; }
+>>>>>>> 0ad0c6cd57fa6954c7758dae9952ca7644736fc9
 
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
-
     }
 }
