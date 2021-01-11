@@ -4,14 +4,21 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Editar utilizador</h2>
+@if (User.IsInRole("Admin"))
+{
+    <h3>Editar Cliente</h3>
+}
+
+@if (User.IsInRole("Empresa"))
+{
+    <h3>Editar Funcionário</h3>
+}
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>ApplicationUser</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
@@ -42,12 +49,13 @@
 }
 
 <div>
-    @if(User.IsInRole("Admin")) 
+    @if (User.IsInRole("Admin"))
     {
         @Html.ActionLink("Voltar", "IndexClientes")
     }
 
-    @if(User.IsInRole("Empresa")){
+    @if (User.IsInRole("Empresa"))
+    {
         @Html.ActionLink("Voltar", "IndexFuncionarios")
     }
 

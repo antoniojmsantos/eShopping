@@ -8,6 +8,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using TP_PWEB.Models;
 
 namespace TP_PWEB.Controllers
@@ -55,8 +56,9 @@ namespace TP_PWEB.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(RegisterViewModel model)
+        public async Task<ActionResult> Create(CreateViewModel model)
         {
+            
             if (ModelState.IsValid)
             {
                 //TEM DE SER CRIADO ASSIM PARA TER ID AUTO
@@ -83,9 +85,15 @@ namespace TP_PWEB.Controllers
 
                     return RedirectToAction("IndexFuncionarios");
                 }
+                else
+                {
+                    ModelState.AddModelError("", "Já existe um utilizador com este email.");
+                    return View(model);
+                }
             }
 
-            return View();
+
+            return View(model);
         }
 
 

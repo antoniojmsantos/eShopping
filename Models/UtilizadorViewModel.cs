@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace TP_PWEB.Models
 {
+
     public class CreateViewModel
     {
-
+        [Required]
         [Display(Name = "Nome Completo")]
         public string NomeCompleto { get; set; }
 
@@ -25,8 +25,9 @@ namespace TP_PWEB.Models
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Confirmar password")]
+        [Compare("Password", ErrorMessage = "As passwords não coincidem.")]
         public string ConfirmPassword { get; set; }
     }
+
 }

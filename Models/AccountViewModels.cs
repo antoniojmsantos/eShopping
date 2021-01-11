@@ -65,10 +65,13 @@ namespace TP_PWEB.Models
 
     public class RegisterViewModel
     {
-        //[Required]
+        [Required]
         [Display(Name = "Tipo de conta")]
         public string SelectedRole { get; set; }
 
+        public IEnumerable<System.Web.Mvc.SelectListItem> RegisterRoles { get; set; }
+
+        [Required]
         [Display(Name = "Nome Completo")]
         public string NomeCompleto { get; set; }
 
@@ -85,11 +88,14 @@ namespace TP_PWEB.Models
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
-                  
+
+        [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Confirmar password")]
+        [Compare("Password", ErrorMessage = "As passwords não coincidem.")]
         public string ConfirmPassword { get; set; }
+
+
     }
 
     public class ResetPasswordViewModel
