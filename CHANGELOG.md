@@ -2,10 +2,12 @@
 
 ## History
 * [08/01/2021](CHANGELOG.md#08-01-2021)
+* [09/01/2021](CHANGELOG.md#09-01-2021)
 
 ## todo
 Geral
 * Melhorar overall layout 
+* Home Page
 
 Cliente
 * Recuperar password
@@ -27,6 +29,10 @@ Admin
 * Gestão de clientes (listar, visualizar, editar)
 * Gestão de categorias
 * Catálogo de Produtos
+
+
+### 09/01/2021
+
 
 ### 08/01/2021
 Utilizadores Anónimos

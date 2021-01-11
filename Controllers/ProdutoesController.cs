@@ -62,7 +62,7 @@ namespace TP_PWEB.Controllers
         // GET: Produtoes/Create
         public ActionResult Create()
         {
-            ViewBag.IdEmpresa = new SelectList(db.Empresas, "IdEmpresa", "Id");
+            ViewBag.IdCategoria = new SelectList(db.Categorias, "IdCategoria", "NomeCategoria");
             return View();
         }
 
@@ -71,7 +71,7 @@ namespace TP_PWEB.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdProduto,Nome,Preco,UnidadesEmStock")] Produto produto)
+        public ActionResult Create([Bind(Include = "IdProduto,Nome,Preco,UnidadesEmStock,IdCategoria")] Produto produto)
         {
             if (ModelState.IsValid)
             {
@@ -86,6 +86,7 @@ namespace TP_PWEB.Controllers
 				{
                     produto.EmStock = true;
 				}
+
 
                 db.Produtos.Add(produto);
                 db.SaveChanges();
@@ -118,7 +119,7 @@ namespace TP_PWEB.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdProduto,Nome,Preco,IdEmpresa,UnidadesEmStock, EmStock")] Produto produto)
+        public ActionResult Edit([Bind(Include = "IdProduto,Nome,Preco,IdEmpresa,UnidadesEmStock,EmStock,IdCategoria")] Produto produto)
         {
             if (ModelState.IsValid)
             {
@@ -126,7 +127,6 @@ namespace TP_PWEB.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdEmpresa = new SelectList(db.Empresas, "IdEmpresa", "Id", produto.IdEmpresa);
             return View(produto);
         }
 

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<TP_PWEB.Models.ItemCarrinho>
+@{
+	ViewBag.Title = "(" + Session["nItens"] + ") Carrinho ";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Carrinho</h2>
+<table class="table">
+	<tr>
+		<th>
+			Produto
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Produto.Preco)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Unidades)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Subtotal)
+		</th>
+		<th></th>
+	</tr>
+
+	@{ var count = 0;} 
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.Produto.Nome)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Produto.Preco)
+			</td>
+				<td>
+				@Html.DisplayFor(modelItem => item.Unidades)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Subtotal)
+			</td>
+			<td>
+				@Html.ActionLink("Editar", "EditarItem", new { position = count  },new { @class = "btn btn-default" })
+				@Html.ActionLink("Remover", "RemoverItem", new { position = count  },new { @class = "btn btn-default" })
+			</td>
+		</tr>
+		count++;
+	}
+
+	<tr>
+		<th>Total</th>
+		<td></td>
+		<td></td>
+		<td>@Session["total"]</td>
+		<td>
+			@if (count > 0)
+			{
+				@Html.ActionLink("Finalizar", "Finalizar", "Compras", null, new { @class = "btn btn-primary" })
+			}
+		</td>
+	</tr>
+
+</table>
+

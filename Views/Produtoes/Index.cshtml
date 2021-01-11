@@ -9,13 +9,16 @@
 @if (User.IsInRole("Empresa"))
 {
 	<p>
-		@Html.ActionLink("Create New", "Create")
+		@Html.ActionLink("Registar Produto", "Create", null, new { @class = "btn btn-primary"})
 	</p>
 }
 <table class="table">
 	<tr>
 		<th>
 			Produto
+		</th>
+		<th>
+			Categoria
 		</th>
 		<th>
 			Vendido por
@@ -36,6 +39,9 @@
 <tr>
 	<td>
 		@Html.DisplayFor(modelItem => item.Nome)
+	</td>
+	<td>
+		@Html.DisplayFor(modelItem => item.Categoria.NomeCategoria)
 	</td>
 	<td>
 		@Html.DisplayFor(modelItem => item.Empresa.NomeEmpresa)
@@ -60,19 +66,21 @@
 	@if (User.IsInRole("Cliente"))
 	{
 		<td>
-			@Html.ActionLink("Details", "Details", new { id = item.IdProduto }) |
-			
+			@Html.ActionLink("Details", "Details", new { id = item.IdProduto }, new { @class = "btn btn-default" })
+
 			@if (item.EmStock)
 			{
 				@Html.ActionLink(
-					linkText: "Comprar",
-					actionName: "Create",
-					controllerName: "Compras",
+					linkText: "Adicionar ao carrinho",
+					actionName: "AdicionarItem",
+					controllerName: "Carrinho",
 					routeValues: new
 					{
 						id = item.IdProduto
 					},
-					htmlAttributes: null)
+					htmlAttributes: new {
+						@class = "btn btn-primary"
+					})
 			}
 			else
 			{
@@ -86,16 +94,16 @@
 	{
 		// criar promoção
 		<td>
-			@Html.ActionLink("Details", "Details", new { id = item.IdProduto })
+			@Html.ActionLink("Ver", "Details", new { id = item.IdProduto }, new { @class = "btn btn-default" })
 		</td>
 	}
 
 	@if (User.IsInRole("Empresa"))
 	{
 		<td>
-			@Html.ActionLink("Edit", "Edit", new { id = item.IdProduto }) |
-			@Html.ActionLink("Details", "Details", new { id = item.IdProduto })
-			@Html.ActionLink("Delete", "Delete", new { id = item.IdProduto })
+			@Html.ActionLink("Editar", "Edit", new { id = item.IdProduto }, new { @class = "btn btn-default" })
+			@Html.ActionLink("Detalhes", "Details", new { id = item.IdProduto }, new { @class = "btn btn-default" })
+			@Html.ActionLink("Apagar", "Delete", new { id = item.IdProduto }, new { @class = "btn btn-default" })
 		</td>
 	}
 </tr>

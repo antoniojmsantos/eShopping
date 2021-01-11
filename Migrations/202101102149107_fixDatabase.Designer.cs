@@ -7,13 +7,13 @@ namespace TP_PWEB.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class funcionariofix : IMigrationMetadata
+    public sealed partial class fixDatabase : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(funcionariofix));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(fixDatabase));
         
         string IMigrationMetadata.Id
         {
-            get { return "202101101831498_funcionariofix"; }
+            get { return "202101102149107_fixDatabase"; }
         }
         
         string IMigrationMetadata.Source
