@@ -3,7 +3,7 @@ namespace TP_PWEB.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class addCompras : DbMigration
+    public partial class update_compras : DbMigration
     {
         public override void Up()
         {
@@ -13,8 +13,10 @@ namespace TP_PWEB.Migrations
                     {
                         IdCompra = c.Int(nullable: false, identity: true),
                         DataCriada = c.DateTime(nullable: false),
+                        DataConfirmada = c.DateTime(),
                         Estado = c.Int(nullable: false),
-                        Total = c.Int(nullable: false),
+                        Entrega = c.Int(nullable: false),
+                        Total = c.Decimal(nullable: false, precision: 18, scale: 2),
                         ApplicationUserId = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.IdCompra)

@@ -4,7 +4,7 @@
     ViewBag.Title = "IndexClientes";
 }
 
-<h2>Lista de Clientes</h2>
+<h3>Lista de Clientes</h3>
 
 <table class="table">
     <tr>
@@ -26,9 +26,8 @@
             @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Editar", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Detalhes", "Details", new { id=item.Id })
         </td>
     </tr>
 }

@@ -13,6 +13,7 @@ namespace TP_PWEB.Models
     {
         [Display(Name = "Nome Utilizador")]
         public string NomeCompleto { get; set; }
+        
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

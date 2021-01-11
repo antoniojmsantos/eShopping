@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -135,18 +136,26 @@ namespace TP_PWEB.Controllers
             }
         }
 
+        private IEnumerable<SelectListItem> GetRegiterRoles()
+        {
+            return db.Roles.Where(r => r.Name.Equals("Cliente") || r.Name.Equals("Empresa")).Select(rr =>
+                new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();    
+        }
+
         //
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
         {
             //RegisterViewModel model = new RegisterViewModel();
-            var registerRoles = db.Roles.Where(r => r.Name.Equals("Cliente") || r.Name.Equals("Empresa")).Select(rr =>
-                new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+            
 
-            ViewBag.Roles = registerRoles;
+            //ViewBag.Roles = registerRoles;
 
-            return View();
+            RegisterViewModel model = new RegisterViewModel();
+            model.RegisterRoles = GetRegiterRoles();
+
+            return View(model);
         }
 
         //
@@ -159,58 +168,44 @@ namespace TP_PWEB.Controllers
             if (ModelState.IsValid)
             {
                 var userManager = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                var user = new ApplicationUser { NomeCompleto = model.NomeCompleto, UserName = model.Email, Email = model.Email };
+                var result = await UserManager.CreateAsync(user, model.Password);
 
-                if (model.SelectedRole == "Cliente")
+                if (result.Succeeded)
                 {
-                    var user = new ApplicationUser { NomeCompleto = model.NomeCompleto, UserName = model.Email, Email = model.Email };
-                    var result = await UserManager.CreateAsync(user, model.Password);
-                    if (result.Succeeded)
+                    if (model.SelectedRole == "Cliente")
                     {
                         userManager.AddToRole(user.Id, "Cliente");
-
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                        // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                        // Send an email with this link
-                        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                        // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                        return RedirectToAction("Index", "Home");
+                        
                     }
-                    AddErrors(result);
-                }
-                else if (model.SelectedRole == "Empresa")
-                {
-                    var user = new ApplicationUser { NomeCompleto = model.NomeCompleto, UserName = model.Email, Email = model.Email };
-
-                    var result = await UserManager.CreateAsync(user, model.Password);
-                    if (result.Succeeded)
+                    if (model.SelectedRole == "Empresa")
                     {
                         userManager.AddToRole(user.Id, "Empresa");
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                        var empresa = new Empresa { ApplicationUserId = user.Id, NomeEmpresa = model.NomeEmpresa};
-
+                        var empresa = new Empresa { ApplicationUserId = user.Id, NomeEmpresa = model.NomeEmpresa };
                         db.Empresas.Add(empresa);
-                        db.SaveChanges();
-
-                        // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                        // Send an email with this link
-                        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                        // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                        return RedirectToAction("Index", "Home");
                     }
-                    AddErrors(result);
+
+                    db.SaveChanges();
+
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Já existe um utilizador com este email.");
+                    model.RegisterRoles = GetRegiterRoles(); //Tem de ser preenchido novamente, visto que ocorreu um erro e esta a chamar a vista novamente e desta vez não passa pelo GET para preencher
+                    return View(model);
                 }
 
+            }
 
-
-        }
-
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 

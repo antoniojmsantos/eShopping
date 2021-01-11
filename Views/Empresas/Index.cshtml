@@ -4,11 +4,9 @@
     ViewBag.Title = "Lista de Empresas";
 }
 
-<h2>Lista de Empresas</h2>
+<h3>Lista de Empresas</h3>
 
-<p>
-    @Html.ActionLink("Criar Nova", "Create")
-</p>
+
 <table class="table">
     <tr>
         <th>
@@ -32,8 +30,7 @@
         </td>
         <td>
             @Html.ActionLink("Editar", "Edit", new { id=item.IdEmpresa }) |
-            @Html.ActionLink("Detalhes", "Details", new { id=item.IdEmpresa }) |
-            @Html.ActionLink("Apagar", "Delete", new { id=item.IdEmpresa })
+            @Html.ActionLink("Detalhes", "Details", new { id=item.IdEmpresa })
         </td>
     </tr>
 }
