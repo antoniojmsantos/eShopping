@@ -4,6 +4,7 @@
 * [08/01/2021](CHANGELOG.md#08-01-2021)
 * [09/01/2021](CHANGELOG.md#09-01-2021)
 * [10/01/2021](CHANGELOG.md#10-01-2021)
+* [11/01/2021](CHANGELOG.md#11-01-2021)
 
 ## todo
 Geral
@@ -12,7 +13,6 @@ Geral
 
 Cliente
 * Recuperar password
-* Produtos - Pesquisa por palavra/categoria
 
 Funcionário 
 * Gerir Compras
@@ -27,6 +27,10 @@ Admin
 * Gestão de empresas
 * Gestão de clientes (listar, visualizar, editar)
 * Gestão de categorias
+
+### 11/01/2021
+Cliente
+* Produtos - Pesquisa por palavra/categoria
 
 ### 10/01/2021
 Cliente

@@ -17,7 +17,7 @@ namespace TP_PWEB.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Produtoes
-        public ActionResult Index()
+        public ActionResult Index(string produto, int? IdCategoria)
         {
             List<Produto> produtos;
 
@@ -38,9 +38,38 @@ namespace TP_PWEB.Controllers
                 produtos = db.Produtos.Include(p => p.Empresa).ToList();
                 return View(produtos);
             }
+            else if (User.IsInRole("Cliente"))
+			{
+                IQueryable<Produto> produtosPesquisados = db.Produtos;
 
-            produtos = db.Produtos.Include(p => p.Empresa).ToList();
-            return View(produtos);
+                if (produto != null)
+				{
+                    produtosPesquisados = produtosPesquisados.Where(p => p.Nome.Contains(produto));
+                    
+				}
+
+                if (IdCategoria != null)
+				{
+                    produtosPesquisados = produtosPesquisados.Where(p => p.Categoria.IdCategoria == IdCategoria);
+				}
+
+
+				SelectList categorias = new SelectList(db.Categorias, "IdCategoria", "NomeCategoria");
+				List<SelectListItem> listaCategorais = categorias.ToList();
+				listaCategorais.Insert(0, new SelectListItem
+				{
+					Text = "- Selecionar -",
+					Value = null,
+					Selected = true
+				});
+
+                ViewBag.Produto = produto;
+                ViewBag.IdCategoria = new SelectList(listaCategorais, "Value", "Text");
+
+				return View(produtosPesquisados.Include(p => p.Empresa).ToList());
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Produtoes/Details/5
