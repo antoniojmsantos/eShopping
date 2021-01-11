@@ -1,0 +1,49 @@
+﻿@model IEnumerable<TP_PWEB.Models.Compra>
+@{
+    ViewBag.Title = "Histórico de Compras";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Histório de Compras</h2>
+<table class="table">
+	<tr>
+		<th>
+			@Html.DisplayNameFor(model => model.Estado)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.DataCriada)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.DataConfirmada)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Entrega)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Total)
+		</th>
+	</tr>
+    @foreach(var item in Model)
+	{
+        <tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.Estado)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.DataCriada)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.DataConfirmada)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Entrega)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Total)
+			</td>
+
+			<td>
+				@Html.ActionLink("Detalhes","Detalhes",new { id = item.IdCompra }, new { @class = "btn btn-default" })
+			</td>
+        </tr>
+	}
+</table>

@@ -3,6 +3,7 @@
 ## History
 * [08/01/2021](CHANGELOG.md#08-01-2021)
 * [09/01/2021](CHANGELOG.md#09-01-2021)
+* [10/01/2021](CHANGELOG.md#10-01-2021)
 
 ## todo
 Geral
@@ -12,8 +13,6 @@ Geral
 Cliente
 * Recuperar password
 * Produtos - Pesquisa por palavra/categoria
-* Compras - !MUDAR! compras têm de levar vários produtos em vez de apenas um
-* Compras - Tipo de entrega
 
 Funcionário 
 * Gerir Compras
@@ -28,11 +27,14 @@ Admin
 * Gestão de empresas
 * Gestão de clientes (listar, visualizar, editar)
 * Gestão de categorias
+
+### 10/01/2021
+Cliente
+* Compras - compras têm de levar vários produtos em vez de apenas um
+* Compras - Tipo de entrega
+
+Admin
 * Catálogo de Produtos
-
-
-### 09/01/2021
-
 
 ### 08/01/2021
 Utilizadores Anónimos

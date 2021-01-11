@@ -26,7 +26,7 @@
 
 					@if (User.IsInRole("Cliente"))
 					{
-						//<li>@Html.ActionLink("Histórico de Compras", "Index", "Compras")</li>
+						<li>@Html.ActionLink("Histórico de Compras", "Index", "Compras")</li>
                         <li>
 							<a href="@Url.Action("Index","Carrinho")">
 								<span>Carrinho</span>

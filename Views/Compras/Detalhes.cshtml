@@ -1,0 +1,79 @@
+﻿@model TP_PWEB.Models.Compra 
+@{
+    ViewBag.Title = "Detalhes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Detalhes</h2>
+<div>
+    <h4>Compra</h4>
+    <hr />
+	<dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.IdCompra)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.IdCompra)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Estado)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Estado)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.DataCriada)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.DataCriada)
+		</dd>
+	</dl>
+</div>
+
+<table class="table">
+	<tr>
+		<th>
+			Produto
+		</th>
+		<th>
+			Unidades
+		</th>
+		<th>
+			Preço
+		</th>
+	</tr>
+@{ 
+	decimal total = 0;
+}
+@foreach(var item in Model.Itens)
+{
+    <tr>
+        <td>
+			@Html.DisplayFor(modelItem => item.Produto.Nome)
+        </td>
+		<td>
+			@Html.DisplayFor(modelItem => item.Unidades)
+        </td>
+		<td>
+			@Html.DisplayFor(modelItem => item.Subtotal)
+        </td>
+    </tr>
+	total += item.Subtotal;
+}
+	<tr>
+		<th>
+			Total
+		</th>
+		<td>
+			
+		</td>
+		<td>
+			@total
+		</td>
+	</tr>
+</table>
+<p>
+	@Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-primary" })
+</p>
+

@@ -8,6 +8,7 @@ using TP_PWEB.Models;
 namespace TP_PWEB.Controllers
 {
 
+    [Authorize(Roles = "Cliente")]
     public class CarrinhoController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -44,6 +45,7 @@ namespace TP_PWEB.Controllers
 
         // POST: Carrinho/AdicionarItem
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AdicionarItem(FormCollection collection)
         {
             List<ItemCarrinho> itens;
@@ -90,6 +92,7 @@ namespace TP_PWEB.Controllers
 
         // POST: Carrinho/EditarItem/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult EditarItem(FormCollection collection)
         {
             List<ItemCarrinho> itens = (List<ItemCarrinho>)Session["carrinho"];
@@ -117,7 +120,8 @@ namespace TP_PWEB.Controllers
 
         // POST: Carrinho/RemoverItem/5
         [HttpPost]
-		public ActionResult RemoverItem(FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult RemoverItem(FormCollection collection)
 		{
 			List<ItemCarrinho> itens = (List<ItemCarrinho>)Session["carrinho"];
             var position = int.Parse(collection["position"]);
@@ -133,5 +137,5 @@ namespace TP_PWEB.Controllers
 
             return RedirectToAction("Index");
 		}
-    }
+	}
 }

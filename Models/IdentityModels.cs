@@ -31,6 +31,8 @@ namespace TP_PWEB.Models
         }
         public DbSet<Empresa> Empresas { get; set; }
         public DbSet<Produto> Produtos { get; set; }
+        public DbSet<Compra> Compras { get; set; }
+        public DbSet<LinhaCompra> LinhaCompras { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Promocao> Promocao { get; set; }
         public DbSet<Funcionario> Funcionarios { get; set; }
