@@ -11,6 +11,8 @@ Geral
 * Mudar nome das tabelas para que se perceba que são relacionais (por exemplo FuncionariosEmpresa)
 * Melhorar overall layout 
 * Home Page
+* Campos de decimal values têm de deixar pôr valores decimais
+* Nome da empresa => unique
 
 Cliente
 * Recuperar password
