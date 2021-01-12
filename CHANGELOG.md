@@ -14,6 +14,7 @@ Geral
 * Campos de decimal values têm de deixar pôr valores decimais
 * Nome da empresa => unique
 * Estatisticas -> ordernar produtos mais vendidos, retornar unidades vendidas e remover compras
+* Adicionar Imagens a produtos
 
 Cliente
 * Recuperar password

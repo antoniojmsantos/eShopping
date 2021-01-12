@@ -88,57 +88,75 @@ namespace TP_PWEB.Controllers
         }
 
         [Authorize(Roles = "Empresa")]
-        public ActionResult Estatisticas(int? mes, int? ano)
+        public ActionResult Estatisticas(int? mes, string ano)
         {
             var userId = User.Identity.GetUserId();
             var empresa = db.Empresas.Where(e => e.ApplicationUserId == userId).FirstOrDefault();
 
-            IQueryable<LinhaCompra> comprasPesquisadas = db.LinhaCompras.Where(c => c.Produto.IdEmpresa == empresa.IdEmpresa);
-
             if (empresa != null)
 			{
-                if (mes != null)
-                {
-                    comprasPesquisadas = comprasPesquisadas.Where(c => c.DataConfirmada.Value.Month == mes);
+                var comprasPesquisadas = db.LinhaCompras.Where(lc => lc.Produto.IdEmpresa == empresa.IdEmpresa);
+                var topVendasQuery = db.LinhaCompras.Where(lc => lc.Produto.IdEmpresa == empresa.IdEmpresa);
 
+                if (mes != null)
+				{
+                    comprasPesquisadas = comprasPesquisadas.Where(c => c.DataConfirmada.Value.Month == mes);
                 }
 
                 if (ano != null)
-                {
-                    comprasPesquisadas = comprasPesquisadas.Where(c => c.DataConfirmada.Value.Year == ano);
-                }
+				{
+                    if (ano.Length > 0)
+					{
+                        var anoAsInt = int.Parse(ano);
+                        comprasPesquisadas = comprasPesquisadas.Where(c => c.DataConfirmada.Value.Year == anoAsInt);
+					}
+				}
 
-                ViewBag.nMedioVendas = comprasPesquisadas.Count();
+                decimal totalVendas = 0;
                 if (comprasPesquisadas.Count() > 0)
-				{
-                    ViewBag.vMedioVendas = comprasPesquisadas.Sum(c => c.Subtotal);
-                } else
-				{
-                    ViewBag.vMedioVendas = 0;
+                {
+                    totalVendas = comprasPesquisadas.Sum(c => c.Subtotal);
                 }
-                
-                ViewBag.prodMaisVendidos = db.Produtos.Where(p => p.IdEmpresa == empresa.IdEmpresa).Take(5).ToList();
-                ViewBag.nMedioClientes = comprasPesquisadas.Select(c => c.Compra.ApplicationUserId).Distinct().Count();
 
-                SelectList meses = new SelectList(
-                    Enumerable.Range(1, 12).Select(i => new { I = i, M = DateTimeFormatInfo.CurrentInfo.GetMonthName(i)}),
-                    "I",
-                    "M"
-                );
-                List<SelectListItem> listaMeses= meses.ToList();
-				listaMeses.Insert(0, new SelectListItem
-				{
-					Text = "- Selecionar -",
-					Value = null,
-					Selected = true
-				});
+                List<TopVendaViewModel> Top5Vendas = comprasPesquisadas
+                    .GroupBy(p => p.Produto)
+                    .Select(x => new TopVendaViewModel
+                    {
+                        NomeProduto = x.Key.Nome,
+                        UnidadesVendidas = x.Sum(y => y.Unidades),
+                        TotalVendas = x.Sum(y => y.Unidades) * x.Key.Preco,
+                        PercentagemFaturacao = (double)(x.Sum(y => y.Unidades) * x.Key.Preco / totalVendas)
+                    })
+                    .OrderByDescending(x => x.UnidadesVendidas)
+                    .Take(5)
+                    .ToList();
 
-				ViewBag.Ano = ano;
+         
+         
+                List<SelectListItem> listaMeses = new SelectList(
+                    Enumerable.Range(1, 12).Select(i => new { val = i, txt = DateTimeFormatInfo.CurrentInfo.GetMonthName(i) }),
+                    "val",
+                    "txt"
+                ).ToList();
+
+                listaMeses.Insert(0, new SelectListItem
+                {
+                    Text = "- Selecionar -",
+                    Value = null,
+                    Selected = true
+                });
+
                 ViewBag.Mes = new SelectList(listaMeses, "Value", "Text");
-
-                return View(comprasPesquisadas.Include(p => p.Produto).ToList());
-            }
-
+                return View(new EstatisticasViewModel {
+                    nVendas = comprasPesquisadas.Count(),
+                    totalVendas = totalVendas,
+                    nClientes = comprasPesquisadas.Select(c => c.Compra.ApplicationUserId).Distinct().Count(),
+                    Vendas = comprasPesquisadas.Include(p => p.Produto).ToList(),
+                    TopVendas = Top5Vendas,
+                    Ano = ano,
+                    Mes = mes
+                });
+			}
 
             return View();
         }

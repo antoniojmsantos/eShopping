@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TP_PWEB.Models.LinhaCompra>
+﻿@model TP_PWEB.Models.EstatisticasViewModel
 @{
     ViewBag.Title = "Estatisticas";
 }
@@ -8,16 +8,17 @@
 	<hr />
 	<div class="form-horizontal">
 		<div class="form-group">
-			<label class="control-label col-md-2">Mês</label>
+			@Html.LabelFor(model => model.Mes, htmlAttributes: new { @class = "control-label col-md-2" })
 			<div class="col-md-10">
 				@Html.DropDownList("Mes", null, htmlAttributes: new { @class = "form-control" })
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label class="control-label col-md-2">Ano</label>
+			@Html.LabelFor(model => model.Ano, htmlAttributes: new { @class = "control-label col-md-2" })
 			<div class="col-md-10">
-				<input name="ano" value="@ViewBag.Ano" class="form-control" />
+				@Html.EditorFor(model => model.Ano, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.Ano, "", new { @class = "text-danger" })
 			</div>
 		</div>
 	</div>
@@ -29,76 +30,90 @@
 	</div>
 }
 <h4>
-	Relatório Mensal
+	Relatório Sumariado
 </h4>
 <table class="table">
 	<tr>
 		<th>
-			Número médio de vendas
+			@Html.DisplayNameFor(model => model.nVendas)
 		</th>
 		<th>
-			Valor médio de vendas
+			@Html.DisplayNameFor(model => model.totalVendas)
 		</th>
 		<th>
-			Número médio de clientes
+			@Html.DisplayNameFor(model => model.nClientes)
 		</th>
 	</tr>
 	<tr>
 		<td>
-			@ViewBag.nMedioVendas
+			@Html.DisplayFor(model => model.nVendas)
 		</td>
 		<td>
-			@ViewBag.vMedioVendas
+			@Html.DisplayFor(model => model.totalVendas)
 		</td>
 		<td>
-			@ViewBag.nMedioClientes
+			@Html.DisplayFor(model => model.nClientes)
 		</td>
 	</tr>
 </table>
 <h4>
-	Top 5 produtos mais vendidos
+	@Html.DisplayNameFor(model => model.TopVendas)
 </h4>
 <table class="table">
 	<tr>
 		<th>
-			Produtos mais vendidos
+			@Html.DisplayNameFor(_ => Model.TopVendas[0].NomeProduto)
 		</th>
 		<th>
-			Unidades vendidas
+			@Html.DisplayNameFor(_ => Model.TopVendas[0].UnidadesVendidas)
+		</th>
+		<th>
+			@Html.DisplayNameFor(_ => Model.TopVendas[0].TotalVendas)
+		</th>
+		<th>
+			@Html.DisplayNameFor(_ => Model.TopVendas[0].PercentagemFaturacao)
 		</th>
 	</tr>
-	@foreach (var item in ViewBag.prodMaisVendidos as IList<TP_PWEB.Models.Produto>)
+	@foreach (var item in Model.TopVendas)
 	{
 		<tr>
 			<td>
-				@Html.DisplayFor(modelItem => item.Nome)
+				@Html.DisplayFor(modelItem => item.NomeProduto)
 			</td>
 			<td>
-				-
+				@Html.DisplayFor(modelItem => item.UnidadesVendidas)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.TotalVendas)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.PercentagemFaturacao)
 			</td>
 		</tr>
 	}
 </table>
+<h4>
+	@Html.DisplayNameFor(model => model.Vendas)
+</h4>
 <table class="table">
 	<tr>
 		<th>
 			Produto
 		</th>
 		<th>
-			@Html.DisplayNameFor(model => model.Produto.Preco)
+			Preço
 		</th>
 		<th>
-			@Html.DisplayNameFor(model => model.Unidades)
+			Unidades
 		</th>
 		<th>
-			@Html.DisplayNameFor(model => model.DataConfirmada)
+			DataConfirmada
 		</th>
 		<th>
-			@Html.DisplayNameFor(model => model.Subtotal)
+			Subtotal
 		</th>
-		<th></th>
 	</tr>
-	@if(Model.Count() == 0)
+	@if(Model.Vendas.Count() == 0)
 	{
 		<tr>
 			<td colspan="5">
@@ -106,7 +121,7 @@
 			</td>
 		</tr>
 	}
-	@foreach(var item in Model)
+	@foreach(var item in Model.Vendas)
 	{
 		<tr>
 			<td>
