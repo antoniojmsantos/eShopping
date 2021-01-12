@@ -28,6 +28,9 @@
 		</div>
 	</div>
 }
+<h4>
+	Relatório Mensal
+</h4>
 <table class="table">
 	<tr>
 		<th>
@@ -39,24 +42,39 @@
 		<th>
 			Número médio de clientes
 		</th>
+	</tr>
+	<tr>
+		<td>
+			@ViewBag.nMedioVendas
+		</td>
+		<td>
+			@ViewBag.vMedioVendas
+		</td>
+		<td>
+			@ViewBag.nMedioClientes
+		</td>
+	</tr>
+</table>
+<h4>
+	Top 5 produtos mais vendidos
+</h4>
+<table class="table">
+	<tr>
 		<th>
-			Top 5 produtos vendidos
+			Produtos mais vendidos
+		</th>
+		<th>
+			Unidades vendidas
 		</th>
 	</tr>
 	@foreach (var item in ViewBag.prodMaisVendidos as IList<TP_PWEB.Models.Produto>)
 	{
 		<tr>
 			<td>
-				@ViewBag.nMedioVendas
-			</td>
-			<td>
-				@ViewBag.vMedioVendas
-			</td>
-			<td>
-				@ViewBag.nMedioClientes
-			</td>
-			<td>
 				@Html.DisplayFor(modelItem => item.Nome)
+			</td>
+			<td>
+				-
 			</td>
 		</tr>
 	}
