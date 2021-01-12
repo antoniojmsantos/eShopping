@@ -7,13 +7,6 @@ using System.Web;
 
 namespace TP_PWEB.Models
 {
-	public enum Estado
-	{
-		PENDENTE = 0,
-		CONFIRMADA = 1,
-		ENTREGUE = 2
-	}
-
 	public enum Entrega
 	{
 		ENTREGA_AO_DOMICILIO = 0,
@@ -23,14 +16,6 @@ namespace TP_PWEB.Models
 	{
 		[Key]
 		public int IdCompra { get; set; }
-
-		[Display(Name = "Data de Compra")]
-		public DateTime DataCriada { get; set; }
-
-		[Display(Name = "Data de Confirmação")]
-		public DateTime? DataConfirmada { get; set; }
-
-		public Estado Estado { get; set; }
 
 		public Entrega Entrega { get; set; }
 

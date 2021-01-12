@@ -31,12 +31,26 @@ namespace TP_PWEB.Models
         {
         }
         public DbSet<Empresa> Empresas { get; set; }
+        public DbSet<EmpresaFuncionario> Funcionarios { get; set; }
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Compra> Compras { get; set; }
         public DbSet<LinhaCompra> LinhaCompras { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
-        public DbSet<Promocao> Promocao { get; set; }
-        public DbSet<Funcionario> Funcionarios { get; set; }
+        public DbSet<Promocao> Promocoes{ get; set; }
+
+		protected override void OnModelCreating(DbModelBuilder modelBuilder)
+		{
+			base.OnModelCreating(modelBuilder);
+
+			modelBuilder.Entity<Produto>().ToTable("Produtos");
+			modelBuilder.Entity<Promocao>().ToTable("Promocoes");
+			modelBuilder.Entity<EmpresaFuncionario>().
+				HasKey(i => new
+				{
+					i.IdEmpresa,
+					i.ApplicationUserId
+				});
+		}
 
         public static ApplicationDbContext Create()
         {

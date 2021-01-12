@@ -15,15 +15,13 @@ namespace TP_PWEB.Controllers
 {
     public class UtilizadoresController : Controller
     {
-        // GET: Utilizadores
 
         private ApplicationDbContext db = new ApplicationDbContext();
         private UserManager<ApplicationUser> UserManager  = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
 
         [Authorize(Roles = "Admin")]
-        public ActionResult IndexClientes()
+        public ActionResult ListaClientes()
         {
-            //FUNCAO LINQ PARA OBTER SÓ OS UTILIZADORES COM O ROLE CLIENTE
             var role = db.Roles.SingleOrDefault(m => m.Name == "Cliente");
             var usersInRole = db.Users.Where(m => m.Roles.Any(r => r.RoleId == role.Id));
 
@@ -32,75 +30,19 @@ namespace TP_PWEB.Controllers
         }
 
         [Authorize(Roles = "Empresa")]
-        public ActionResult IndexFuncionarios()
+        public ActionResult ListaFuncionarios()
         {
             var userId = User.Identity.GetUserId();
             var empresa = db.Empresas.Where(e => e.ApplicationUserId == userId).FirstOrDefault();
-            //System.Diagnostics.Debug.WriteLine("Empresa: " + empresa.NomeEmpresa);
-            //var role = db.Roles.SingleOrDefault(m => m.Name == "Funcionario");
-            //var funcionarios = db.Users.Where(m => m.Roles.Any(r => r.RoleId == role.Id));
-            //var funcionariosEmpresa = funcionarios.Where(u => u.Id == empresa.ApplicationUserId);
-
+           
             var funcionarios = db.Funcionarios.Where(f => f.IdEmpresa == empresa.IdEmpresa);
-            // QUERO PRECORRER A LISTA DE UTILIZADORES E PARA CADA USER COMPARAR O SEU ID COM CADA ID DA LISTA DE FUNCIONARIOS
-            var funcionariosEmpresa = db.Users.Where(fe => funcionarios.Any(i=> i.ApplicationUserId == fe.Id));
+            var funcionariosEmpresa = db.Users.Where(u => funcionarios.Any(f => f.ApplicationUserId == u.Id));
 
-            return View(funcionariosEmpresa.ToList());
+            return View(funcionariosEmpresa);
         }
 
-        // GET: Clientes/Create
-        public ActionResult Create()
+        public ActionResult DetalhesFuncionario(string id)
         {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(CreateViewModel model)
-        {
-            
-            if (ModelState.IsValid)
-            {
-                //TEM DE SER CRIADO ASSIM PARA TER ID AUTO
-                var user = new ApplicationUser
-                {
-                    NomeCompleto = model.NomeCompleto,
-                    UserName = model.Email,
-                    Email = model.Email
-                };
-                var result = await UserManager.CreateAsync(user, model.Password);
-
-                //Add User to the selected Roles 
-                if (result.Succeeded)
-                {
-                    UserManager.AddToRole(user.Id, "Funcionario");
-
-                    var loggedUserId = User.Identity.GetUserId();
-                    var empresa = db.Empresas.Where(e => e.ApplicationUserId == loggedUserId).FirstOrDefault();
-                    var funcionario = new Funcionario { ApplicationUserId = user.Id, IdEmpresa = empresa.IdEmpresa };
-                    db.Funcionarios.Add(funcionario);
-                    db.SaveChanges();
-
-
-
-                    return RedirectToAction("IndexFuncionarios");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Já existe um utilizador com este email.");
-                    return View(model);
-                }
-            }
-
-
-            return View(model);
-        }
-
-
-        // GET: Clientes/Edit/5
-        public ActionResult Edit(string id)
-        {
-            
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -110,7 +52,35 @@ namespace TP_PWEB.Controllers
             {
                 return HttpNotFound();
             }
+            return View(applicationUser);
+        }
 
+        public ActionResult DetalhesCliente(string id)
+		{
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser applicationUser = db.Users.Find(id);
+            if (applicationUser == null)
+            {
+                return HttpNotFound();
+            }
+            return View(applicationUser);
+        }
+
+        // GET: Clientes/Edit/5
+        public ActionResult Edit(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser applicationUser = db.Users.Find(id);
+            if (applicationUser == null)
+            {
+                return HttpNotFound();
+            }
 
             return View(applicationUser);
         }
@@ -127,15 +97,72 @@ namespace TP_PWEB.Controllers
                 applicationUser.UserName = applicationUser.Email;
                 db.Entry(applicationUser).State = EntityState.Modified;
                 db.SaveChanges();
-                if(User.IsInRole("Admin"))
-                    return RedirectToAction("IndexClientes");
-                else return RedirectToAction("IndexFuncionarios");
+                if (User.IsInRole("Admin"))
+                    return RedirectToAction("ListaClientes");
+                else return RedirectToAction("ListaFuncionarios");
             }
             return View(applicationUser);
         }
 
-        // GET: Clientes/Delete/5
-        public ActionResult Delete(string id)
+        [Authorize(Roles = "Empresa")]
+        public ActionResult RegistarFuncionario()
+        {
+            var userId = User.Identity.GetUserId();
+            ViewBag.Empresa = db.Empresas.Where(e => e.ApplicationUserId == userId).FirstOrDefault().NomeEmpresa;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Empresa")]
+        public async Task<ActionResult> RegistarFuncionario(CreateViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser
+                {
+                    NomeCompleto = model.NomeCompleto,
+                    UserName = model.Email,
+                    Email = model.Email
+                };
+                var result = await UserManager.CreateAsync(user, model.Password);
+
+                //Add User to the selected Roles 
+                if (result.Succeeded)
+                {
+                    UserManager.AddToRole(user.Id, "Funcionario");
+
+                    var loggedUserId = User.Identity.GetUserId();
+                    var empresa = db.Empresas.Where(e => e.ApplicationUserId == loggedUserId).FirstOrDefault();
+
+                    if (empresa != null)
+                    {
+                        db.Funcionarios.Add(new EmpresaFuncionario
+                        {
+                            ApplicationUserId = user.Id,
+                            IdEmpresa = empresa.IdEmpresa
+                        });
+                        db.SaveChanges();
+
+                        return RedirectToAction("ListaFuncionarios");
+                    } else
+					{
+                        ModelState.AddModelError("", "Empresa não existe.");
+                        return View(model);
+					}
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Já existe um utilizador com este email.");
+                    return View(model);
+                }
+            }
+
+            return View(model);
+        }
+
+        // GET: Utilizadores/ApagarFuncionario/5
+        public ActionResult ApagarFuncionario(string id)
         {
             if (id == null)
             {
@@ -150,36 +177,16 @@ namespace TP_PWEB.Controllers
         }
 
         // POST: Clientes/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("ApagarFuncionario")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles ="Empresa")]
         public ActionResult DeleteConfirmed(string id)
         {
             ApplicationUser applicationUser = db.Users.Find(id);
             db.Users.Remove(applicationUser);
             db.SaveChanges();
-            if (User.IsInRole("Admin"))
-                return RedirectToAction("IndexClientes");
-            else return RedirectToAction("IndexFuncionarios");
+            return RedirectToAction("ListaFuncionarios");
         }
-
-        // GET: Clientes/Details/5
-        public ActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ApplicationUser applicationUser = db.Users.Find(id);
-            if (applicationUser == null)
-            {
-                return HttpNotFound();
-            }
-            return View(applicationUser);
-        }
-
-
-
-
     }
 
     

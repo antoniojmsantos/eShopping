@@ -8,7 +8,6 @@
 
 ## todo
 Geral
-* Mudar nome das tabelas para que se perceba que são relacionais (por exemplo FuncionariosEmpresa)
 * Melhorar overall layout 
 * Home Page
 * Campos de decimal values têm de deixar pôr valores decimais
@@ -17,23 +16,30 @@ Geral
 Cliente
 * Recuperar password
 
-Funcionário 
-* Gerir Compras
+Funcionário
 * Criar promoções de produtos
+
+Empresa
+* Estatísticas
+
+### 11/01/2021
+Geral
+* Mudar nome das tabelas para que se perceba que são relacionais (por exemplo FuncionariosEmpresa)
+
+Cliente
+* Produtos - Pesquisa por palavra/categoria
+
+Funcionario
+* Gerir Compras
 
 Empresa
 * Gestão de funcionários
 * Gestão do catálogo de produtos (Apagar)
-* Estatísticas
 
 Admin
 * Gestão de empresas
 * Gestão de clientes (listar, visualizar, editar)
 * Gestão de categorias
-
-### 11/01/2021
-Cliente
-* Produtos - Pesquisa por palavra/categoria
 
 ### 10/01/2021
 Cliente

@@ -7,15 +7,6 @@
 <table class="table">
 	<tr>
 		<th>
-			@Html.DisplayNameFor(model => model.Estado)
-		</th>
-		<th>
-			@Html.DisplayNameFor(model => model.DataCriada)
-		</th>
-		<th>
-			@Html.DisplayNameFor(model => model.DataConfirmada)
-		</th>
-		<th>
 			@Html.DisplayNameFor(model => model.Entrega)
 		</th>
 		<th>
@@ -26,15 +17,6 @@
 	{
         <tr>
 			<td>
-				@Html.DisplayFor(modelItem => item.Estado)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.DataCriada)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.DataConfirmada)
-			</td>
-			<td>
 				@Html.DisplayFor(modelItem => item.Entrega)
 			</td>
 			<td>
@@ -42,7 +24,7 @@
 			</td>
 
 			<td>
-				@Html.ActionLink("Detalhes","Detalhes",new { id = item.IdCompra }, new { @class = "btn btn-default" })
+				@Html.ActionLink("Detalhes","DetalhesCompra",new { id = item.IdCompra }, new { @class = "btn btn-default" })
 			</td>
         </tr>
 	}

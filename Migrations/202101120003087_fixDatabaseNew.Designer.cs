@@ -7,13 +7,13 @@ namespace TP_PWEB.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class update_compras : IMigrationMetadata
+    public sealed partial class fixDatabaseNew : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(update_compras));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(fixDatabaseNew));
         
         string IMigrationMetadata.Id
         {
-            get { return "202101110255303_update_compras"; }
+            get { return "202101120003087_fixDatabaseNew"; }
         }
         
         string IMigrationMetadata.Source

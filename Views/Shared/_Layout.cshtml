@@ -26,29 +26,29 @@
 
 					@if (User.IsInRole("Cliente"))
 					{
-						<li>@Html.ActionLink("Histórico de Compras", "Index", "Compras")</li>
-                        <li>
+						<li>@Html.ActionLink("Histórico de Compras", "ListaComprasCliente", "Compras")</li>
+						<li>
 							<a href="@Url.Action("Index","Carrinho")">
 								<span>Carrinho</span>
 								<span class="badge">@Session["nItens"]</span>
 							</a>
-                        </li>
+						</li>
 					}
 
 					@if (User.IsInRole("Admin"))
 					{
-						<li>@Html.ActionLink("Gestão de Clientes", "IndexClientes", "Utilizadores")</li>
+						<li>@Html.ActionLink("Gestão de Clientes", "ListaClientes", "Utilizadores")</li>
 						<li>@Html.ActionLink("Gestão de Empresas", "Index", "Empresas")</li>
 						<li>@Html.ActionLink("Gestão de Categorias", "Index", "Categorias")</li>
 					}
 					@if (User.IsInRole("Empresa"))
 					{
-						<li>@Html.ActionLink("Gestão de Funcionários", "IndexFuncionarios", "Utilizadores")</li>
+						<li>@Html.ActionLink("Gestão de Funcionários", "ListaFuncionarios", "Utilizadores")</li>
 						<li>@Html.ActionLink("Estatísticas", "Estatisticas", "Empresas")</li>
 					}
 					@if (User.IsInRole("Funcionario"))
 					{
-						<li>@Html.ActionLink("Gestão de Compras", "Index", "Compras")</li>
+						<li>@Html.ActionLink("Gestão de Vendas", "ListaComprasFuncionario", "Compras")</li>
 						@*<li>@Html.ActionLink("Promoções", "Index", "Promocoes")</li>*@
 					}
 

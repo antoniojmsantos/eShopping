@@ -1,0 +1,77 @@
+﻿@model IEnumerable<TP_PWEB.Models.LinhaCompra>
+
+@{
+    ViewBag.Title = "ListaComprasFuncionario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Vendas</h2>
+<table class="table">
+	<tr>
+		<th>
+			@Html.DisplayNameFor(model => model.Compra.ApplicationUser.Email)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Produto.Nome)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Unidades)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Subtotal)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.DataCriada)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.DataConfirmada)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.DataEntrega)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Estado)
+		</th>
+		<th></th>
+	</tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Compra.ApplicationUser.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Produto.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Unidades)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Subtotal)
+        </td>
+		<td>
+			@Html.DisplayFor(modelItem => item.DataCriada)
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.DataConfirmada)
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.DataEntrega)
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.Estado)
+		</td>
+		<td>
+			@if (item.Estado == TP_PWEB.Models.Estado.PENDENTE)
+			{
+				@Html.ActionLink("Confirmar", "Confirmar", new { id = item.IdLinhaCompra }, new { @class = "btn btn-primary" })
+			}
+			@if (item.Estado == TP_PWEB.Models.Estado.CONFIRMADA)
+			{
+				@Html.ActionLink("Marcar Entregue", "MarcarEntregue", new { id = item.IdLinhaCompra }, new { @class = "btn btn-primary" })
+			}
+			@Html.ActionLink("Detalhes", "DetalhesLinhaCompra", new { id = item.IdLinhaCompra }, new { @class = "btn btn-default" })
+		</td>
+    </tr>
+}
+
+</table>

@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<TP_PWEB.Models.ApplicationUser>
 
 @{
-    ViewBag.Title = "IndexFuncionarios";
+    ViewBag.Title = "Funcionários";
 }
 
 <h3>Lista de Funcionários</h3>
 
 <p>
-    @Html.ActionLink("Criar novo", "Create")
+    @Html.ActionLink("Registar Novo Funcionario", "RegistarFuncionario")
 </p>
 <table class="table">
     <tr>
@@ -30,9 +30,8 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Detalhes", "Details", new { id = item.Id })
-                @Html.ActionLink("Apagar", "Delete", new { id = item.Id })
+                @Html.ActionLink("Detalhes", "DetalhesFuncionario", new { id = item.Id })
+                @Html.ActionLink("Apagar", "ApagarFuncionario", new { id = item.Id })
             </td>
         </tr>
     }

@@ -6,6 +6,13 @@ using System.Web;
 
 namespace TP_PWEB.Models
 {
+	public enum Estado
+	{
+		PENDENTE = 0,
+		CONFIRMADA = 1,
+		ENTREGUE = 2
+	}
+
 	public class LinhaCompra
 	{
 		[Key]
@@ -14,6 +21,17 @@ namespace TP_PWEB.Models
 		public int Unidades { get; set; }
 
 		public decimal Subtotal { get; set; }
+
+		public Estado Estado { get; set; }
+
+		[Display(Name = "Data de Compra")]
+		public DateTime DataCriada { get; set; }
+
+		[Display(Name = "Data de Confirmação")]
+		public DateTime? DataConfirmada { get; set; }
+
+		[Display(Name = "Data de Entrega")]
+		public DateTime? DataEntrega { get; set; }
 
 		public int IdCompra { get; set; }
 		public virtual Compra Compra { get; set; }

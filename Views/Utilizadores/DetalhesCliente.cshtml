@@ -39,11 +39,11 @@
     @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
     @if (User.IsInRole("Admin"))
     {
-        @Html.ActionLink("Voltar", "IndexClientes")
+        @Html.ActionLink("Voltar", "ListaClientes")
     }
 
     @if (User.IsInRole("Empresa"))
     {
-        @Html.ActionLink("Voltar", "IndexFuncionarios")
+        @Html.ActionLink("Voltar", "ListaFuncionarios")
     }
 </p>

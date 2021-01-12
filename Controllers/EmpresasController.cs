@@ -90,10 +90,9 @@ namespace TP_PWEB.Controllers
         public ActionResult Estatisticas()
         {
             var userId = User.Identity.GetUserId();
-
             var empresa = db.Empresas.Where(e => e.ApplicationUserId == userId).FirstOrDefault();
 
-            return View(empresa);
+            return View();
         }
     }
 }

@@ -1,0 +1,81 @@
+﻿@model TP_PWEB.Models.LinhaCompra
+
+@{
+    ViewBag.Title = "DetalhesLinhaCompra";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>DetalhesLinhaCompra</h2>
+
+<div>
+    <h4>LinhaCompra</h4>
+    <hr />
+	<dl class="dl-horizontal">
+		<dt>
+			Cliente
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Compra.ApplicationUser.Email)
+		</dd>
+
+		<dt>
+			Produto
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Produto.Nome)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Unidades)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Unidades)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Subtotal)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Subtotal)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Estado)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Estado)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.DataCriada)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.DataCriada)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.DataConfirmada)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.DataConfirmada)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.DataEntrega)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.DataEntrega)
+		</dd>
+	</dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "ListaComprasFuncionario")
+</p>

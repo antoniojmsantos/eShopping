@@ -20,10 +20,10 @@ namespace TP_PWEB.Controllers
         public ActionResult Index(string produto, int? IdCategoria)
         {
             List<Produto> produtos;
+            var userId = User.Identity.GetUserId();
 
             if (User.IsInRole("Empresa"))
 			{
-                var userId = User.Identity.GetUserId();
                 var empresa = db.Empresas.Where(e => e.ApplicationUserId == userId).FirstOrDefault();
                 if (empresa != null) {
 
@@ -34,6 +34,22 @@ namespace TP_PWEB.Controllers
 
                     return View(produtos);
                 }
+
+                produtos = db.Produtos.Include(p => p.Empresa).ToList();
+                return View(produtos);
+            }
+            else if (User.IsInRole("Funcionario"))
+			{
+                var funcionario = db.Funcionarios.FirstOrDefault(f => f.ApplicationUserId == userId);
+                if (funcionario != null)
+				{
+                    produtos = db.Produtos
+                        .Include(p => p.Empresa)
+                        .Where(p => p.IdEmpresa == funcionario.IdEmpresa)
+                        .ToList();
+
+                    return View(produtos);
+				}
 
                 produtos = db.Produtos.Include(p => p.Empresa).ToList();
                 return View(produtos);

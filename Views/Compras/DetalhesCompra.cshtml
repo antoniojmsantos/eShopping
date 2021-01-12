@@ -14,20 +14,6 @@
 		<dd>
 			@Html.DisplayFor(model => model.IdCompra)
 		</dd>
-
-		<dt>
-			@Html.DisplayNameFor(model => model.Estado)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.Estado)
-		</dd>
-
-		<dt>
-			@Html.DisplayNameFor(model => model.DataCriada)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.DataCriada)
-		</dd>
 	</dl>
 </div>
 
@@ -35,6 +21,18 @@
 	<tr>
 		<th>
 			Produto
+		</th>
+		<th>
+			Estado
+		</th>
+		<th>
+			Data Criada
+		</th>
+		<th>
+			Data Confirmada
+		</th>
+		<th>
+			Data Entrega
 		</th>
 		<th>
 			Unidades
@@ -53,6 +51,18 @@
 			@Html.DisplayFor(modelItem => item.Produto.Nome)
         </td>
 		<td>
+			@Html.DisplayFor(modelItem => item.Estado)
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.DataCriada)
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.DataConfirmada)
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.DataEntrega)
+		</td>
+		<td>
 			@Html.DisplayFor(modelItem => item.Unidades)
         </td>
 		<td>
@@ -65,15 +75,16 @@
 		<th>
 			Total
 		</th>
-		<td>
-			
-		</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
 		<td>
 			@total
 		</td>
 	</tr>
 </table>
 <p>
-	@Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-primary" })
+	@Html.ActionLink("Voltar", "ListaComprasCliente", null, new { @class = "btn btn-primary" })
 </p>
 

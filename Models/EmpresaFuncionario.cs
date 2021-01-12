@@ -7,19 +7,16 @@ using System.Web;
 
 namespace TP_PWEB.Models
 {
-    public class Funcionario
-    {
+	public class EmpresaFuncionario
+	{
 
-        [Key]
-        public int IdFuncionario { get; set; }
-
-
-        [Display(Name = "IdEmpresa")]
+        [Display(Name = "Empresa")]
         public int IdEmpresa { get; set; }
         public virtual Empresa Empresa { get; set; }
 
         public string ApplicationUserId { get; set; }
         [ForeignKey("ApplicationUserId")]
         public virtual ApplicationUser ApplicationUser { get; set; }
+
     }
 }
