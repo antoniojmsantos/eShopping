@@ -27,7 +27,7 @@ namespace TP_PWEB.Models
 		[Display(Name = "Data de Compra")]
 		public DateTime DataCriada { get; set; }
 
-		[Display(Name = "Data de Confirmação")]
+		[Display(Name = "Data de Venda")]
 		public DateTime? DataConfirmada { get; set; }
 
 		[Display(Name = "Data de Entrega")]

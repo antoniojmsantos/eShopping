@@ -144,7 +144,7 @@ namespace TP_PWEB.Controllers
                 Session["nItens"] = 0;
                 Session["total"] = 0;
 
-                return RedirectToAction("Index");
+                return RedirectToAction("ListaComprasCliente");
 			}
             return View(compra);
 		}

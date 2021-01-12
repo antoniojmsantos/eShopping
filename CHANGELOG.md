@@ -5,6 +5,7 @@
 * [09/01/2021](CHANGELOG.md#09-01-2021)
 * [10/01/2021](CHANGELOG.md#10-01-2021)
 * [11/01/2021](CHANGELOG.md#11-01-2021)
+* [12/01/2021](CHANGELOG.md#12-01-2021)
 
 ## todo
 Geral
@@ -18,6 +19,8 @@ Cliente
 
 Funcionário
 * Criar promoções de produtos
+
+### 12/01/2021
 
 Empresa
 * Estatísticas

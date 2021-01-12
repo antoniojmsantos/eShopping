@@ -1,8 +1,112 @@
-﻿@model TP_PWEB.Models.Empresa
+﻿@model IEnumerable<TP_PWEB.Models.LinhaCompra>
 @{
     ViewBag.Title = "Estatisticas";
 }
-
 <h2>Estatisticas</h2>
+@using (Html.BeginForm("Estatisticas", "Empresas", FormMethod.Get))
+{
+	<hr />
+	<div class="form-horizontal">
+		<div class="form-group">
+			<label class="control-label col-md-2">Mês</label>
+			<div class="col-md-10">
+				@Html.DropDownList("Mes", null, htmlAttributes: new { @class = "form-control" })
+			</div>
+		</div>
 
-@Model.NomeEmpresa
+		<div class="form-group">
+			<label class="control-label col-md-2">Ano</label>
+			<div class="col-md-10">
+				<input name="ano" value="@ViewBag.Ano" class="form-control" />
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-10">
+			<input type="submit" value="Pesquisar" class="btn btn-primary" />
+		</div>
+	</div>
+}
+<table class="table">
+	<tr>
+		<th>
+			Número médio de vendas
+		</th>
+		<th>
+			Valor médio de vendas
+		</th>
+		<th>
+			Número médio de clientes
+		</th>
+		<th>
+			Top 5 produtos vendidos
+		</th>
+	</tr>
+	@foreach (var item in ViewBag.prodMaisVendidos as IList<TP_PWEB.Models.Produto>)
+	{
+		<tr>
+			<td>
+				@ViewBag.nMedioVendas
+			</td>
+			<td>
+				@ViewBag.vMedioVendas
+			</td>
+			<td>
+				@ViewBag.nMedioClientes
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Nome)
+			</td>
+		</tr>
+	}
+</table>
+<table class="table">
+	<tr>
+		<th>
+			Produto
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Produto.Preco)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Unidades)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.DataConfirmada)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Subtotal)
+		</th>
+		<th></th>
+	</tr>
+	@if(Model.Count() == 0)
+	{
+		<tr>
+			<td colspan="5">
+				Não existem registos correspondentes aos critérios
+			</td>
+		</tr>
+	}
+	@foreach(var item in Model)
+	{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.Produto.Nome)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Produto.Preco)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Unidades)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.DataConfirmada)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Subtotal)
+			</td>
+		</tr>
+	}
+
+</table>
