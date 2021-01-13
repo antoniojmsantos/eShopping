@@ -36,7 +36,7 @@ namespace TP_PWEB.Models
         public DbSet<Compra> Compras { get; set; }
         public DbSet<LinhaCompra> LinhaCompras { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
-        public DbSet<Promocao> Promocoes{ get; set; }
+        public DbSet<Promocao> Promocoes { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{

@@ -1,0 +1,18 @@
+﻿@model TP_PWEB.Models.Promocao
+
+@{
+    ViewBag.Title = "RemoverPromocao";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>RemoverPromocao</h2>
+<h4>Tem a certeza que pretende remover a promoção?</h4>
+<div>
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Remover" class="btn btn-primary" />
+            @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
+        </div>
+    }
+</div>

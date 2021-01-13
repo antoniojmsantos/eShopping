@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TP_PWEB.Models.Produto>
+﻿@model IEnumerable<TP_PWEB.Models.ProdutoViewModel>
 
 @{
 	ViewBag.Title = "Catálogo de Produtos";
@@ -44,23 +44,24 @@ else if (User.IsInRole("Cliente"))
 <table class="table">
 	<tr>
 		<th>
-			Produto
+			@Html.DisplayNameFor(model => model.NomeProduto)
 		</th>
 		<th>
-			Categoria
+			@Html.DisplayNameFor(model => model.Categoria)
 		</th>
 		<th>
-			Vendido por
+			@Html.DisplayNameFor(model => model.Vendedor)
 		</th>
 		<th>
 			@Html.DisplayNameFor(model => model.EmStock)
 		</th>
 		<th>
-			@Html.DisplayNameFor(model => model.UnidadesEmStock)
+			@Html.DisplayNameFor(model => model.Unidades)
 		</th>
 		<th>
 			@Html.DisplayNameFor(model => model.Preco)
 		</th>
+		<th></th>
 		<th></th>
 	</tr>
 	@if (Model.Count() == 0)
@@ -73,13 +74,13 @@ else if (User.IsInRole("Cliente"))
 	{
 		<tr>
 			<td>
-				@Html.DisplayFor(modelItem => item.Nome)
+				@Html.DisplayFor(modelItem => item.NomeProduto)
 			</td>
 			<td>
-				@Html.DisplayFor(modelItem => item.Categoria.NomeCategoria)
+				@Html.DisplayFor(modelItem => item.Categoria)
 			</td>
 			<td>
-				@Html.DisplayFor(modelItem => item.Empresa.NomeEmpresa)
+				@Html.DisplayFor(modelItem => item.Vendedor)
 			</td>
 			<td>
 				@if (item.EmStock)
@@ -92,56 +93,66 @@ else if (User.IsInRole("Cliente"))
 				}
 			</td>
 			<td>
-				x @Html.DisplayFor(modelItem => item.UnidadesEmStock)
+				x @Html.DisplayFor(modelItem => item.Unidades)
 			</td>
+			@{
+				if (item.PrecoPromocional != null)
+				{
+					<td>
+						<del>@Html.DisplayFor(modelItem => item.Preco) </del> @Html.DisplayFor(modelItem => item.PrecoPromocional) (- @Html.DisplayFor(modelItem => item.Desconto) %)
+					</td>
+				}
+				else
+				{
+					<td>
+						@Html.DisplayFor(modelItem => item.Preco)
+					</td>
+				}
+			}
+
 			<td>
-				@Html.DisplayFor(modelItem => item.Preco)
+				@Html.ActionLink("Details", "Detalhes", new { id = item.IdProduto }, new { @class = "btn btn-default" })
+
+				@if (User.IsInRole("Cliente") && item.EmStock)
+				{
+					@Html.ActionLink(
+						linkText: "Adicionar ao carrinho",
+						actionName: "AdicionarItem",
+						controllerName: "Carrinho",
+						routeValues: new
+						{
+							id = item.IdProduto
+						},
+						htmlAttributes: new
+								{
+							@class = "btn btn-primary"
+						})
+				}
+
+				@if (User.IsInRole("Funcionario"))
+				{
+					if (item.PrecoPromocional != null)
+					{
+						@Html.ActionLink("Remover Promoção", "RemoverPromocao", new { id = item.IdPromocao }, new { @class = "btn btn-default" })	
+					} else
+					{
+						@Html.ActionLink("Criar Promoção", "CriarPromocao", new { id = item.IdProduto }, new { @class = "btn btn-default" })
+					}
+				}
+
+				@if (User.IsInRole("Empresa"))
+				{
+					if(item.Apagado)
+					{
+						<span class="label-danger">Produto Apagado</span>
+					} else
+					{
+						@Html.ActionLink("Editar", "Editar", new { id = item.IdProduto }, new { @class = "btn btn-default" })
+						@Html.ActionLink("Apagar", "Apagar", new { id = item.IdProduto }, new { @class = "btn btn-default" })
+					}
+
+				}
 			</td>
-
-			@if (User.IsInRole("Cliente"))
-			{
-				<td>
-					@Html.ActionLink("Details", "Details", new { id = item.IdProduto }, new { @class = "btn btn-default" })
-
-					@if (item.EmStock)
-					{
-						@Html.ActionLink(
-							linkText: "Adicionar ao carrinho",
-							actionName: "AdicionarItem",
-							controllerName: "Carrinho",
-							routeValues: new
-							{
-								id = item.IdProduto
-							},
-							htmlAttributes: new
-								 {
-								@class = "btn btn-primary"
-							})
-					}
-					else
-					{
-						// button is disabled
-					}
-
-				</td>
-			}
-
-			@if (User.IsInRole("Funcionario"))
-			{
-				// criar promoção
-				<td>
-					@Html.ActionLink("Ver", "Details", new { id = item.IdProduto }, new { @class = "btn btn-default" })
-				</td>
-			}
-
-			@if (User.IsInRole("Empresa"))
-			{
-				<td>
-					@Html.ActionLink("Editar", "Edit", new { id = item.IdProduto }, new { @class = "btn btn-default" })
-					@Html.ActionLink("Detalhes", "Details", new { id = item.IdProduto }, new { @class = "btn btn-default" })
-					@Html.ActionLink("Apagar", "Delete", new { id = item.IdProduto }, new { @class = "btn btn-default" })
-				</td>
-			}
 		</tr>
 	}
 </table>

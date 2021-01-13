@@ -28,6 +28,7 @@ namespace TP_PWEB.Models
         [Display(Name="Em stock?")]
         public bool EmStock { get; set; }
 
+        public bool Apagado { get; set; }
 
         [Display(Name = "Categoria")]
         public int IdCategoria { get; set; }

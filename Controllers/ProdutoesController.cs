@@ -19,40 +19,29 @@ namespace TP_PWEB.Controllers
         // GET: Produtoes
         public ActionResult Index(string produto, int? IdCategoria)
         {
-            List<Produto> produtos;
+            List<ProdutoViewModel> prods = new List<ProdutoViewModel>();
             var userId = User.Identity.GetUserId();
+            List<Produto> produtos = new List<Produto>();
 
             if (User.IsInRole("Empresa"))
-			{
-                var empresa = db.Empresas.Where(e => e.ApplicationUserId == userId).FirstOrDefault();
-                if (empresa != null) {
-
-                    produtos = db.Produtos
-                        .Include(p => p.Empresa)
-                        .Where(p => p.IdEmpresa == empresa.IdEmpresa)
-                        .ToList();
-
-                    return View(produtos);
+            {
+                var empresa = db.Empresas.FirstOrDefault(e => e.ApplicationUserId == userId);
+                if (empresa == null)
+                {
+                    return View(prods);
                 }
 
-                produtos = db.Produtos.Include(p => p.Empresa).ToList();
-                return View(produtos);
+                produtos = db.Produtos.Where(p => p.IdEmpresa == empresa.IdEmpresa).OrderBy(p => p.Categoria.NomeCategoria).ThenBy(p => p.Nome).ToList();
             }
             else if (User.IsInRole("Funcionario"))
-			{
+            {
                 var funcionario = db.Funcionarios.FirstOrDefault(f => f.ApplicationUserId == userId);
-                if (funcionario != null)
-				{
-                    produtos = db.Produtos
-                        .Include(p => p.Empresa)
-                        .Where(p => p.IdEmpresa == funcionario.IdEmpresa)
-                        .ToList();
+                if (funcionario == null)
+                {
+                    return View(prods);
+                }
 
-                    return View(produtos);
-				}
-
-                produtos = db.Produtos.Include(p => p.Empresa).ToList();
-                return View(produtos);
+                produtos = db.Produtos.Where(p => p.IdEmpresa == funcionario.IdEmpresa).OrderBy(p => p.Categoria.NomeCategoria).ThenBy(p => p.Nome).ToList();
             }
             else if (User.IsInRole("Cliente"))
 			{
@@ -69,7 +58,6 @@ namespace TP_PWEB.Controllers
                     produtosPesquisados = produtosPesquisados.Where(p => p.Categoria.IdCategoria == IdCategoria);
 				}
 
-
 				SelectList categorias = new SelectList(db.Categorias, "IdCategoria", "NomeCategoria");
 				List<SelectListItem> listaCategorais = categorias.ToList();
 				listaCategorais.Insert(0, new SelectListItem
@@ -82,24 +70,138 @@ namespace TP_PWEB.Controllers
                 ViewBag.Produto = produto;
                 ViewBag.IdCategoria = new SelectList(listaCategorais, "Value", "Text");
 
-				return View(produtosPesquisados.Include(p => p.Empresa).ToList());
+                produtos = produtosPesquisados.Where(p => p.Apagado == false).OrderBy(p => p.Categoria.NomeCategoria).ThenBy(p => p.Nome).ToList();
             }
 
-            return RedirectToAction("Index", "Home");
+            produtos.ForEach(x => {
+                var prodviewmodel = new ProdutoViewModel
+                {
+                    NomeProduto = x.Nome,
+                    IdProduto = x.IdProduto,
+                    Categoria = x.Categoria.NomeCategoria,
+                    Vendedor = x.Empresa.NomeEmpresa,
+                    EmStock = x.EmStock,
+                    Unidades = x.UnidadesEmStock,
+                    Preco = x.Preco,
+                    Apagado = x.Apagado
+                };
+
+                var promocao = db.Promocoes.Where(p => p.IdProduto == x.IdProduto && p.Ativa == true).FirstOrDefault();
+                if (promocao != null)
+                {
+                    prodviewmodel.IdPromocao = promocao.IdPromocao;
+                    prodviewmodel.PrecoPromocional = promocao.PrecoNovo;
+                    prodviewmodel.Desconto = promocao.Percentagem;
+                }
+
+                prods.Add(prodviewmodel);
+            });
+
+            return View(prods);
         }
 
+        public ActionResult CriarPromocao(int? id)
+		{
+            if (id == null)
+			{
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Produto produto = db.Produtos.Find(id);
+            if (produto == null)
+			{
+                return RedirectToAction("Index");
+			}
+
+            ViewBag.Produto = produto;
+            return View();
+		}
+
+        [Authorize(Roles = "Funcionario")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CriarPromocao([Bind(Include = "IdPromocao,IdProduto,Percentagem")] Promocao promocao)
+		{
+            if (ModelState.IsValid)
+            {
+                var produto = db.Produtos.Find(promocao.IdProduto);
+                if (produto == null)
+				{
+                    ModelState.AddModelError("", "Produto não existe");
+                    return View(promocao);
+				}
+
+                var prom = db.Promocoes.Where(p => p.IdProduto == produto.IdProduto && p.Ativa == true).FirstOrDefault();
+                if (prom != null)
+                {
+                    prom.Ativa = false;
+                }
+                db.Entry(promocao).State = EntityState.Modified;
+
+                promocao.Ativa = true;
+                promocao.PrecoNovo = produto.Preco - (produto.Preco * (promocao.Percentagem / (decimal)100));
+                db.Promocoes.Add(promocao);
+
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Index");
+		}
+
+        public ActionResult RemoverPromocao(int? id)
+		{
+            if (id != null)
+			{
+                return View(db.Promocoes.Find(id));
+			}
+            return RedirectToAction("Index");
+		}
+
+        [HttpPost]
+        public ActionResult RemoverPromocao(int id)
+		{
+            var promocao = db.Promocoes.Find(id);
+            if (promocao != null)
+			{
+                promocao.Ativa = false;
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+		}
+
         // GET: Produtoes/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Detalhes(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Produto produto = db.Produtos.Find(id);
-            if (produto == null)
+            Produto prod = db.Produtos.Find(id);
+            if (prod == null)
             {
                 return HttpNotFound();
             }
+
+            var produto = new ProdutoViewModel {
+                NomeProduto = prod.Nome,
+                IdProduto = prod.IdProduto,
+                Categoria = prod.Categoria.NomeCategoria,
+                Vendedor = prod.Empresa.NomeEmpresa,
+                EmStock = prod.EmStock,
+                Unidades = prod.UnidadesEmStock,
+                Preco = prod.Preco,
+                Apagado = prod.Apagado
+            };
+
+            var promocao = db.Promocoes.Where(p => p.IdProduto == prod.IdProduto && p.Ativa == true).FirstOrDefault();
+            if (promocao != null)
+            {
+                produto.PrecoPromocional = promocao.PrecoNovo;
+                produto.Desconto = promocao.Percentagem;
+            }
+
             return View(produto);
         }
 
@@ -132,7 +234,6 @@ namespace TP_PWEB.Controllers
                     produto.EmStock = true;
 				}
 
-
                 db.Produtos.Add(produto);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -142,8 +243,7 @@ namespace TP_PWEB.Controllers
             return View(produto);
         }
 
-        // GET: Produtoes/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Editar(int? id)
         {
             if (id == null)
             {
@@ -159,15 +259,19 @@ namespace TP_PWEB.Controllers
             return View(produto);
         }
 
-        // POST: Produtoes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdProduto,Nome,Preco,IdEmpresa,UnidadesEmStock,EmStock,IdCategoria")] Produto produto)
+        public ActionResult Editar([Bind(Include = "IdProduto,Nome,Preco,IdEmpresa,UnidadesEmStock,EmStock,IdCategoria")] Produto produto)
         {
             if (ModelState.IsValid)
             {
+                var promocao = db.Promocoes.Where(p => p.IdProduto == produto.IdProduto && p.Ativa == true).FirstOrDefault();
+                if (promocao != null)
+                {
+                    promocao.Ativa = false;
+                    db.Entry(promocao).State = EntityState.Modified;
+                }
+
                 db.Entry(produto).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -176,7 +280,7 @@ namespace TP_PWEB.Controllers
         }
 
         // GET: Produtoes/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Apagar(int? id)
         {
             if (id == null)
             {
@@ -191,12 +295,13 @@ namespace TP_PWEB.Controllers
         }
 
         // POST: Produtoes/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("Apagar")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             Produto produto = db.Produtos.Find(id);
-            db.Produtos.Remove(produto);
+            produto.Apagado = true;
+            db.Entry(produto).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

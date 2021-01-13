@@ -62,15 +62,24 @@ namespace TP_PWEB.Controllers
 
             var IdProduto = int.Parse(collection["IdProduto"]);
             var unidades = int.Parse(collection["Unidades"]);
+            decimal subtotal = 0;
 
             var produto = db.Produtos.Find(IdProduto);
             if (produto != null)
 			{
-                itens.Add(new ItemCarrinho
+                var promocao = db.Promocoes.Where(p => p.IdProduto == IdProduto && p.Ativa == true).FirstOrDefault();
+                if (promocao != null)
                 {
+                    subtotal = promocao.PrecoNovo * unidades;
+                } else
+				{
+                    subtotal = produto.Preco * unidades;
+				}
+
+                itens.Add(new ItemCarrinho {
                     Produto = produto,
                     Unidades = unidades,
-                    Subtotal = produto.Preco * unidades
+                    Subtotal = subtotal
                 });
                 Session["carrinho"] = itens;
                 Session["nItens"] = Convert.ToInt32(Session["nItens"]) + 1;

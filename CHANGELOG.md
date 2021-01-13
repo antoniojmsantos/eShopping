@@ -13,16 +13,15 @@ Geral
 * Home Page
 * Campos de decimal values têm de deixar pôr valores decimais
 * Nome da empresa => unique
-* Estatisticas -> ordernar produtos mais vendidos, retornar unidades vendidas e remover compras
 * Adicionar Imagens a produtos
+* Opção no catálogo da empresa para mostrar produtos apagados
 
+### 12/01/2021
 Cliente
 * Recuperar password
 
 Funcionário
 * Criar promoções de produtos
-
-### 12/01/2021
 
 Empresa
 * Estatísticas
