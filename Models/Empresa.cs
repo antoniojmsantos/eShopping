@@ -14,6 +14,8 @@ namespace TP_PWEB.Models
 
         [Display(Name = "Nome Empresa")]
         [Column("Nome")]
+        [Index(IsUnique = true)]
+        [StringLength(50)]
         public string NomeEmpresa { get; set; }
 
         public string ApplicationUserId { get; set; }

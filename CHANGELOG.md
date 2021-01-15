@@ -7,15 +7,6 @@
 * [11/01/2021](CHANGELOG.md#11-01-2021)
 * [12/01/2021](CHANGELOG.md#12-01-2021)
 
-## todo
-Geral
-* Melhorar overall layout 
-* Home Page
-* Campos de decimal values têm de deixar pôr valores decimais
-* Nome da empresa => unique
-* Adicionar Imagens a produtos
-* Opção no catálogo da empresa para mostrar produtos apagados
-
 ### 12/01/2021
 Cliente
 * Recuperar password

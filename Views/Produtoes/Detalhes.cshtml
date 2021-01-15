@@ -92,6 +92,22 @@
 		@Html.ActionLink("Editar", "Editar", new { id = Model.IdProduto }, new { @class = "btn btn-default" })
 	}
 
+	@if (User.IsInRole("Cliente") && Model.EmStock)
+	{
+		@Html.ActionLink(
+			linkText: "Adicionar ao carrinho",
+			actionName: "AdicionarItem",
+			controllerName: "Carrinho",
+			routeValues: new
+			{
+				id = Model.IdProduto
+			},
+			htmlAttributes: new
+					{
+				@class = "btn btn-primary"
+			})
+	}
+
 	@Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-primary" })
 </p>
 

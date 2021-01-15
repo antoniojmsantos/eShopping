@@ -1,5 +1,104 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model TP_PWEB.Models.HomeViewModel
+@{
+	ViewBag.Title = "Home Page";
 }
-<div>
-</div>
+<h2>
+	Oportunidades Imperdíveis
+</h2>
+<h5>
+	Aproveite oportunidades únicas!
+</h5>
+<table class="table">
+	<tr>
+		<th>#</th>
+		<th>@Html.DisplayNameFor(m => m.oportunidades[0].NomeProduto)</th>
+		<th>@Html.DisplayNameFor(m => m.oportunidades[0].PrecoAntigo)</th>
+		<th>@Html.DisplayNameFor(m => m.oportunidades[0].PrecoNovo)</th>
+		<th>@Html.DisplayNameFor(m => m.oportunidades[0].Desconto)</th>
+		<th></th>
+	</tr>
+	@{
+		var n = 1;
+	} 
+	@foreach (var m in Model.oportunidades)
+	{
+		<tr>
+			<td>
+				@n
+			</td>
+			<td>
+				@Html.DisplayFor(i => m.NomeProduto)
+			</td>
+			<td class="text-danger">
+				<del>@Html.DisplayFor(i => m.PrecoAntigo)</del>
+			</td>
+			<td class="text-success">
+				@Html.DisplayFor(i => m.PrecoNovo)
+			</td>
+			<td class="text-primary">
+				- @Html.DisplayFor(i => m.Desconto) %
+			</td>
+			<td>
+				@Html.ActionLink(
+						linkText: "Ir",
+						actionName: "Detalhes",
+						controllerName: "Produtoes",
+						routeValues: new
+						{
+							id = m.IdProduto
+						},
+						htmlAttributes: new
+						{
+							@class = "btn btn-primary"
+						})
+			</td>
+		</tr>
+		n++;
+	}
+</table>
+<h2>
+	Tendências
+</h2>
+<h5>
+	Descubra os produtos mais procurados!
+</h5>
+<table class="table">
+	<tr>
+		<th>#</th>
+		<th>@Html.DisplayNameFor(m => m.tendencias[0].NomeProduto)</th>
+		<th>@Html.DisplayNameFor(m => m.tendencias[0].UnidadesVendidas)</th>
+		<th></th>
+	</tr>
+	@{
+		n = 1;
+	}
+	@foreach (var m in Model.tendencias)
+	{
+		<tr>
+			<td>
+				@n
+			</td>
+			<td>
+				@Html.DisplayFor(i => m.NomeProduto)
+			</td>
+			<td class="text-primary">
+				@Html.DisplayFor(i => m.UnidadesVendidas)
+			</td>
+			<td>
+				@Html.ActionLink(
+						linkText: "Ir",
+						actionName: "Detalhes",
+						controllerName: "Produtoes",
+						routeValues: new
+						{
+							id = m.IdProduto
+						},
+						htmlAttributes: new
+						{
+							@class = "btn btn-primary"
+						})
+			</td>
+		</tr>
+		n++;
+	}
+</table>

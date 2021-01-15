@@ -301,6 +301,14 @@ namespace TP_PWEB.Controllers
         {
             Produto produto = db.Produtos.Find(id);
             produto.Apagado = true;
+
+            var promocao = db.Promocoes.Where(x => x.IdProduto == id && x.Ativa == true).FirstOrDefault();
+            if (promocao != null)
+            {
+                promocao.Ativa = false;
+                db.Entry(promocao).State = EntityState.Modified;
+            }
+
             db.Entry(produto).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");

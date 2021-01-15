@@ -167,6 +167,15 @@ namespace TP_PWEB.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (model.SelectedRole == "Empresa" && db.Empresas.Any(x => x.NomeEmpresa == model.NomeEmpresa))
+                {
+                    ModelState.AddModelError("NomeEmpresa", "Empresa já existe!");
+
+                    model.RegisterRoles = GetRegiterRoles();
+                    return View(model);
+                }
+
+
                 var userManager = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 var user = new ApplicationUser { NomeCompleto = model.NomeCompleto, UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
@@ -180,6 +189,7 @@ namespace TP_PWEB.Controllers
                     }
                     if (model.SelectedRole == "Empresa")
                     {
+
                         userManager.AddToRole(user.Id, "Empresa");
                         var empresa = new Empresa { ApplicationUserId = user.Id, NomeEmpresa = model.NomeEmpresa };
                         db.Empresas.Add(empresa);

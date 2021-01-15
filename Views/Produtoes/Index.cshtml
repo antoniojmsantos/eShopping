@@ -3,14 +3,10 @@
 @{
 	ViewBag.Title = "Catálogo de Produtos";
 }
-
 <h2>Catálogo de Produtos</h2>
-
 @if (User.IsInRole("Empresa"))
 {
-	<p>
-		@Html.ActionLink("Registar Produto", "Create", null, new { @class = "btn btn-primary" })
-	</p>
+	@Html.ActionLink("Registar Produto", "Create", null, new { @class = "btn btn-primary" })
 }
 else if (User.IsInRole("Cliente"))
 {
@@ -41,6 +37,7 @@ else if (User.IsInRole("Cliente"))
 		</div>
 	}
 }
+<br/><br/>
 <table class="table">
 	<tr>
 		<th>
@@ -133,8 +130,9 @@ else if (User.IsInRole("Cliente"))
 				{
 					if (item.PrecoPromocional != null)
 					{
-						@Html.ActionLink("Remover Promoção", "RemoverPromocao", new { id = item.IdPromocao }, new { @class = "btn btn-default" })	
-					} else
+						@Html.ActionLink("Remover Promoção", "RemoverPromocao", new { id = item.IdPromocao }, new { @class = "btn btn-default" })
+					}
+					else
 					{
 						@Html.ActionLink("Criar Promoção", "CriarPromocao", new { id = item.IdProduto }, new { @class = "btn btn-default" })
 					}
@@ -142,10 +140,11 @@ else if (User.IsInRole("Cliente"))
 
 				@if (User.IsInRole("Empresa"))
 				{
-					if(item.Apagado)
+					if (item.Apagado)
 					{
 						<span class="label-danger">Produto Apagado</span>
-					} else
+					}
+					else
 					{
 						@Html.ActionLink("Editar", "Editar", new { id = item.IdProduto }, new { @class = "btn btn-default" })
 						@Html.ActionLink("Apagar", "Apagar", new { id = item.IdProduto }, new { @class = "btn btn-default" })
