@@ -19,6 +19,7 @@ namespace TP_PWEB.Models
 
         [Required]
         [Display(Name="Preço p/ unidade")]
+        [DataType(DataType.Currency)]
         public decimal Preco { get; set; }
 
         [Required]
