@@ -3,7 +3,8 @@
 @{
 	ViewBag.Title = "DeleteFuncionario";
 }
-<h3>Tem certeza que pretende apagar este funcionario?</h3>
+<br />
+<h5>Tem certeza que pretende apagar este funcionario?</h5>
 <div>
 	<hr />
 	<dl class="dl-horizontal">
@@ -28,8 +29,8 @@
 		@Html.AntiForgeryToken()
 
 		<div class="form-actions no-color">
-			<input type="submit" value="Delete" class="btn btn-default" /> |
-			@Html.ActionLink("Voltar", "ListaFuncionarios")
+			<input type="submit" value="Delete" class="btn btn-danger"/> &nbsp;
+			@Html.ActionLink("Voltar", "ListaFuncionarios", null, new { @class = "btn btn-default" })
 		</div>
 	}
 </div>

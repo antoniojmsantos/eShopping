@@ -153,7 +153,7 @@ namespace TP_PWEB.Controllers
             //ViewBag.Roles = registerRoles;
 
             RegisterViewModel model = new RegisterViewModel();
-            model.RegisterRoles = GetRegiterRoles();
+            model.RegisterRoles = GetRegiterRoles().ToList();
 
             return View(model);
         }
@@ -201,16 +201,16 @@ namespace TP_PWEB.Controllers
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(user.Id, "eShopping - Confirmar conta", "Confirme a sua conta ao clicar na seguinte ligação " + callbackUrl + "");
 
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
                     ModelState.AddModelError("", "Já existe um utilizador com este email.");
-                    model.RegisterRoles = GetRegiterRoles(); //Tem de ser preenchido novamente, visto que ocorreu um erro e esta a chamar a vista novamente e desta vez não passa pelo GET para preencher
+                    model.RegisterRoles = GetRegiterRoles().ToList(); //Tem de ser preenchido novamente, visto que ocorreu um erro e esta a chamar a vista novamente e desta vez não passa pelo GET para preencher
                     return View(model);
                 }
 
@@ -247,25 +247,26 @@ namespace TP_PWEB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
-                {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
-                }
+              if (ModelState.IsValid)
+    {
+        var user = await UserManager.FindByNameAsync(model.Email);
+                //|| !(await UserManager.IsEmailConfirmedAsync(user.Id))
+        if (user == null )
+        {
+            // Don't reveal that the user does not exist or is not confirmed
+            return View("ForgotPasswordConfirmation");
+        }
 
-                // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
-            }
+        // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+        // Send an email with this link
+        string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+        var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);      
+        await UserManager.SendEmailAsync(user.Id, "eShopping - Repor password", "\nClique na seguinte ligação para repor a sua password " + callbackUrl + "");
+        return RedirectToAction("ForgotPasswordConfirmation", "Account");
+    }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+    // If we got this far, something failed, redisplay form
+    return View(model);
         }
 
         //

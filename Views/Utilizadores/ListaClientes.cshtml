@@ -1,11 +1,9 @@
 ﻿@model IEnumerable<TP_PWEB.Models.ApplicationUser>
 
-@{
-    ViewBag.Title = "IndexClientes";
-}
+@{ ViewBag.Title = "IndexClientes"; }
 
-<h3>Lista de Clientes</h3>
-
+<br />
+<br />
 <table class="table">
     <tr>
         <th>
@@ -17,19 +15,18 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.NomeCompleto)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Detalhes", "DetalhesCliente", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.NomeCompleto)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Email)
+    </td>
+    <td>
+        @Html.ActionLink("Detalhes", "Detalhes", new { id = item.Id }, new { @class = "btn btn-info" })
+    </td>
+</tr>}
 
 </table>

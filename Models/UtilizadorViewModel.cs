@@ -7,8 +7,11 @@ using System.ComponentModel.DataAnnotations;
 namespace TP_PWEB.Models
 {
 
-    public class CreateViewModel
+    public class CreateUserViewModel
     {
+
+        public string Empresa { get; set; }
+
         [Required]
         [Display(Name = "Nome Completo")]
         public string NomeCompleto { get; set; }

@@ -4,14 +4,14 @@
     ViewBag.Title = "RemoverPromocao";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>RemoverPromocao</h2>
-<h4>Tem a certeza que pretende remover a promoção?</h4>
+<br />
+<h5>Tem a certeza que pretende remover a promoção do produto?</h5>
 <div>
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
-
+    <br />
         <div class="form-actions no-color">
-            <input type="submit" value="Remover" class="btn btn-primary" />
+            <input type="submit" value="Remover" class="btn btn-warning" /> &nbsp;
             @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
         </div>
     }

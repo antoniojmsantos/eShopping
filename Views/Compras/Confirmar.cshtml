@@ -3,24 +3,15 @@
 	ViewBag.Title = "Confirmar";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Confirmar Compra</h2>
-<p>Pretende confirmar a compra?</p>
+<br>
+<h5>Pretende confirmar a compra?</h5>
 @using (Html.BeginForm())
 {
 	@Html.AntiForgeryToken()
 	@Html.HiddenFor(model => Model.IdLinhaCompra)
-
+	<br />
 	<div class="form-horizontal">
-		<hr />
-
-		<div class="form-group">
-			<div class="col-md-offset-2 col-md-10">
-				<input type="submit" value="Confirmar" class="btn btn-primary" />
-			</div>
-		</div>
+		<input type="submit" value="Confirmar" class="btn btn-primary" /> &nbsp;
+		@Html.ActionLink("Voltar", "ListaComprasFuncionario", null, new { @class = "btn btn-default" })
 	</div>
 }
-
-<div>
-	@Html.ActionLink("Voltar", "ListaComprasFuncionario", null, new { @class = "btn btn-default" })
-</div>

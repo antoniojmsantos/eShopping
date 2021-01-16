@@ -3,14 +3,15 @@
 	ViewBag.Title = "Produto: " + Model.NomeProduto;
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Detalhes - @Model.NomeProduto @{
+<br />
+
+<h5>Detalhes Produto@{
 	if (Model.Apagado)
 	{
-		<span class="text-danger"> APAGADO </span>
+		<span class="text-danger"> (APAGADO) </span>
 	}
-}</h2>
+}</h5>
 <div>
-	<h4>Descrição do produto</h4>
 	<hr />
 	<dl class="dl-horizontal">
 		<dt>
@@ -87,28 +88,29 @@
 	</dl>
 </div>
 <p>
-	@if (User.IsInRole("Empresa"))
-	{
-		@Html.ActionLink("Editar", "Editar", new { id = Model.IdProduto }, new { @class = "btn btn-default" })
-	}
+    @if (User.IsInRole("Empresa"))
+    {
+        @Html.ActionLink("Editar", "Editar", new { id = Model.IdProduto }, new { @class = "btn btn-primary" }) @:&nbsp;
+    }
 
-	@if (User.IsInRole("Cliente") && Model.EmStock)
-	{
-		@Html.ActionLink(
-			linkText: "Adicionar ao carrinho",
-			actionName: "AdicionarItem",
-			controllerName: "Carrinho",
-			routeValues: new
-			{
-				id = Model.IdProduto
-			},
-			htmlAttributes: new
-					{
-				@class = "btn btn-primary"
-			})
-	}
+    @if (User.IsInRole("Cliente") && Model.EmStock)
+    {
+        @Html.ActionLink(
+            linkText: "Adicionar ao carrinho",
+            actionName: "AdicionarItem",
+            controllerName: "Carrinho",
+            routeValues: new
+            {
+                id = Model.IdProduto
+            },
+            htmlAttributes: new
+                    {
+                @class = "btn btn-primary"
+            })
+        @:&nbsp;
+    }
 
-	@Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
 </p>
 
 

@@ -4,18 +4,18 @@
     ViewBag.Title = "Detalhes";
 }
 
+<br />
+
 @if (User.IsInRole("Admin"))
 {
-    <h3>Detalhes Cliente</h3>
-}
+<h5>Detalhes Cliente</h5>}
 
 @if (User.IsInRole("Empresa"))
 {
-    <h3>Detalhes Funcionário</h3>
-}
+<h5>Detalhes Funcionário</h5>}
+
 
 <div>
-
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -34,16 +34,19 @@
             @Html.DisplayFor(model => model.Email)
         </dd>
     </dl>
+
+    </dl>
 </div>
 <p>
-    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
+    
     @if (User.IsInRole("Admin"))
     {
-        @Html.ActionLink("Voltar", "ListaClientes")
+        @Html.ActionLink("Voltar", "ListaClientes", null, new { @class = "btn btn-default" })
     }
 
     @if (User.IsInRole("Empresa"))
     {
-        @Html.ActionLink("Voltar", "ListaFuncionarios")
+        @Html.ActionLink("Editar", "EditarFuncionario", new { id = Model.Id }, new { @class = "btn btn-warning" }) @:&nbsp;
+        @Html.ActionLink("Voltar", "ListaFuncionarios", null, new { @class = "btn btn-defalt" }) 
     }
 </p>

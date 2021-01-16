@@ -4,7 +4,9 @@
     ViewBag.Title = "ListaComprasFuncionario";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Vendas</h2>
+<br />
+<br />
+
 <table class="table">
 	<tr>
 		<th>
@@ -63,13 +65,13 @@
 		<td>
 			@if (item.Estado == TP_PWEB.Models.Estado.PENDENTE)
 			{
-				@Html.ActionLink("Confirmar", "Confirmar", new { id = item.IdLinhaCompra }, new { @class = "btn btn-primary" })
+				@Html.ActionLink("Confirmar", "Confirmar", new { id = item.IdLinhaCompra }, new { @class = "btn btn-primary" })@:&nbsp;
 			}
 			@if (item.Estado == TP_PWEB.Models.Estado.CONFIRMADA)
 			{
-				@Html.ActionLink("Marcar Entregue", "MarcarEntregue", new { id = item.IdLinhaCompra }, new { @class = "btn btn-primary" })
+				@Html.ActionLink("Marcar Entregue", "MarcarEntregue", new { id = item.IdLinhaCompra }, new { @class = "btn btn-success" })@:&nbsp; 
 			}
-			@Html.ActionLink("Detalhes", "DetalhesLinhaCompra", new { id = item.IdLinhaCompra }, new { @class = "btn btn-default" })
+			@Html.ActionLink("Detalhes", "DetalhesLinhaCompra", new { id = item.IdLinhaCompra }, new { @class = "btn btn-info" })
 		</td>
     </tr>
 }

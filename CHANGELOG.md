@@ -7,6 +7,14 @@
 * [11/01/2021](CHANGELOG.md#11-01-2021)
 * [12/01/2021](CHANGELOG.md#12-01-2021)
 
+TODO:
+* Ordenar histórico de compras por data de compra
+* Bug nas estatisticas faturado apareçe com preco sem promocao
+* Historico de vendas aparece com preco sem promocao
+* Bug enumeracoes
+* Utilizador anonimo e Admin? tem de conseguir ver os produtos
+* CheckBox para aparecer produtos apagados
+
 ### 12/01/2021
 Cliente
 * Recuperar password

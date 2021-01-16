@@ -72,6 +72,10 @@ namespace TP_PWEB.Controllers
 
                 produtos = produtosPesquisados.Where(p => p.Apagado == false).OrderBy(p => p.Categoria.NomeCategoria).ThenBy(p => p.Nome).ToList();
             }
+            else
+            {
+                produtos = db.Produtos.OrderBy(p => p.Categoria.NomeCategoria).ThenBy(p => p.Nome).ToList();
+            }
 
             produtos.ForEach(x => {
                 var prodviewmodel = new ProdutoViewModel
@@ -205,12 +209,14 @@ namespace TP_PWEB.Controllers
             return View(produto);
         }
 
-        [Authorize(Roles ="Empresa")]
+
         // GET: Produtoes/Create
+        [Authorize(Roles = "Empresa")]
         public ActionResult Create()
         {
-            ViewBag.IdCategoria = new SelectList(db.Categorias, "IdCategoria", "NomeCategoria");
-            return View();
+            CriarProdutoViewModel model = new CriarProdutoViewModel();
+            model.Categorias = new SelectList(db.Categorias, "IdCategoria", "NomeCategoria");
+            return View(model);
         }
 
         // POST: Produtoes/Create
@@ -218,10 +224,15 @@ namespace TP_PWEB.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdProduto,Nome,Preco,UnidadesEmStock,IdCategoria")] Produto produto)
+        public ActionResult Create(CriarProdutoViewModel model)
         {
             if (ModelState.IsValid)
             {
+                var produto = new Produto
+                {
+                    Preco = model.Preco, UnidadesEmStock = model.UnidadesEmStock,
+                    IdCategoria = model.IdCategoria, Nome = model.Nome
+                };
                 var userId = User.Identity.GetUserId();
                 produto.IdEmpresa = db.Empresas.Where(e => e.ApplicationUserId == userId).FirstOrDefault().IdEmpresa;
                 
@@ -238,9 +249,10 @@ namespace TP_PWEB.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.IdEmpresa = new SelectList(db.Empresas, "IdEmpresa", "Id", produto.IdEmpresa);
-            return View(produto);
+            else{
+                model.Categorias = new SelectList(db.Categorias, "IdCategoria", "NomeCategoria");
+                return View(model);
+            }   
         }
 
         public ActionResult Editar(int? id)

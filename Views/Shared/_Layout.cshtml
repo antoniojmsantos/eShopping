@@ -17,42 +17,45 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("eShopping", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+                <a href="@Url.Action("Index", "Home")" class="navbar-brand">
+                    <img src="~/Content/Images/logo.png" style="max-width:150px; margin-top:-2px" />
+                </a>
             </div>
             <div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
+                <ul class="nav navbar-nav">
 
-					<li>@Html.ActionLink("Catálogo de Produtos", "Index", "Produtoes")</li>
+                    <li class="@Html.IsActive("Index", "Produtoes")">@Html.ActionLink("Catálogo de Produtos", "Index", "Produtoes")</li>
 
-					@if (User.IsInRole("Cliente"))
-					{
-						<li>@Html.ActionLink("Histórico de Compras", "ListaComprasCliente", "Compras")</li>
-						<li>
-							<a href="@Url.Action("Index","Carrinho")">
-								<span>Carrinho</span>
-								<span class="badge">@Session["nItens"]</span>
-							</a>
-						</li>
-					}
+                    @if (User.IsInRole("Cliente"))
+                    {
+                        <li class="@Html.IsActive("ListaComprasCliente", "Compras")">@Html.ActionLink("Histórico de Compras", "ListaComprasCliente", "Compras")</li>
+                        <li class="@Html.IsActive("Index", "Carrinho")">
+                            <a href="@Url.Action("Index","Carrinho")">
+                                <span>Carrinho</span>
+                                <span class="badge">@Session["nItens"]</span>
+                            </a>
+                        </li>
+}
 
-					@if (User.IsInRole("Admin"))
-					{
-						<li>@Html.ActionLink("Gestão de Clientes", "ListaClientes", "Utilizadores")</li>
-						<li>@Html.ActionLink("Gestão de Empresas", "Index", "Empresas")</li>
-						<li>@Html.ActionLink("Gestão de Categorias", "Index", "Categorias")</li>
-					}
-					@if (User.IsInRole("Empresa"))
-					{
-						<li>@Html.ActionLink("Gestão de Funcionários", "ListaFuncionarios", "Utilizadores")</li>
-						<li>@Html.ActionLink("Estatísticas", "Estatisticas", "Empresas")</li>
-					}
-					@if (User.IsInRole("Funcionario"))
-					{
-						<li>@Html.ActionLink("Gestão de Vendas", "ListaComprasFuncionario", "Compras")</li>
-						@*<li>@Html.ActionLink("Promoções", "Index", "Promocoes")</li>*@
-					}
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="@Html.IsActive("ListaClientes", "Utilizadores")">@Html.ActionLink("Gestão de Clientes", "ListaClientes", "Utilizadores")</li>
+                        <li class="@Html.IsActive("Index", "Empresas")">@Html.ActionLink("Gestão de Empresas", "Index", "Empresas")</li>
+                        <li class="@Html.IsActive("Index", "Categorias")">@Html.ActionLink("Gestão de Categorias", "Index", "Categorias")</li>
+}
+                    @if (User.IsInRole("Empresa"))
+                    {
+                        <li class="@Html.IsActive("ListaFuncionarios", "Utilizadores")">@Html.ActionLink("Gestão de Funcionários", "ListaFuncionarios", "Utilizadores")</li>
+                        <li class="@Html.IsActive("Estatisticas", "Empresas")">@Html.ActionLink("Estatísticas", "Estatisticas", "Empresas")</li>
+}
+                    @if (User.IsInRole("Funcionario"))
+                    {
+                        <li class="@Html.IsActive("ListaComprasFuncionario", "Compras")">@Html.ActionLink("Gestão de Vendas", "ListaComprasFuncionario", "Compras")</li>
 
-				</ul>
+                    }
+
+                </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -61,7 +64,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year PWeb Grupo 86 - Todos os direitos reservados</p>
         </footer>
     </div>
 

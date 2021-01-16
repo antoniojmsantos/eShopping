@@ -4,11 +4,10 @@
     ViewBag.Title = "DetalhesLinhaCompra";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>DetalhesLinhaCompra</h2>
+<br />
+<h5>Detalhes Venda</h5>
 
 <div>
-    <h4>LinhaCompra</h4>
     <hr />
 	<dl class="dl-horizontal">
 		<dt>
@@ -77,5 +76,5 @@
 	</dl>
 </div>
 <p>
-    @Html.ActionLink("Back to List", "ListaComprasFuncionario")
+    @Html.ActionLink("Voltar", "ListaComprasFuncionario", null, new { @class = "btn btn-default" })
 </p>

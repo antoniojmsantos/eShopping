@@ -59,7 +59,7 @@ namespace TP_PWEB.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Lembrar-se de mim")]
         public bool RememberMe { get; set; }
     }
 
@@ -84,7 +84,7 @@ namespace TP_PWEB.Models
         public string Email { get; set; }
         
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 4)]
+        [StringLength(100, ErrorMessage = "A {0} tem de ter pelo menos {2} caracteres.", MinimumLength = 4)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }

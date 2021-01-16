@@ -39,6 +39,7 @@ namespace TP_PWEB.Controllers
                 .Where(x => x.Key.Apagado == false)
                 .Select(x => new SimpleProdutoViewModel
                 {
+                    IdProduto = x.Key.IdProduto,
                     NomeProduto = x.Key.Nome,
                     PrecoAntigo = x.Key.Preco,
                     UnidadesVendidas = x.Sum(y => y.Unidades)

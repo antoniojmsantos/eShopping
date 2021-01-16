@@ -3,7 +3,8 @@
     ViewBag.Title = "Histórico de Compras";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Histório de Compras</h2>
+<br />
+<br />
 <table class="table">
 	<tr>
 		<th>
@@ -12,6 +13,7 @@
 		<th>
 			@Html.DisplayNameFor(model => model.Total)
 		</th>
+		<th></th>
 	</tr>
     @foreach(var item in Model)
 	{
@@ -24,7 +26,7 @@
 			</td>
 
 			<td>
-				@Html.ActionLink("Detalhes","DetalhesCompra",new { id = item.IdCompra }, new { @class = "btn btn-default" })
+				@Html.ActionLink("Detalhes","DetalhesCompra",new { id = item.IdCompra }, new { @class = "btn btn-info" })
 			</td>
         </tr>
 	}

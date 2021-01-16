@@ -2,144 +2,162 @@
 @{
     ViewBag.Title = "Estatisticas";
 }
-<h2>Estatisticas</h2>
+<br />
+<br />
 @using (Html.BeginForm("Estatisticas", "Empresas", FormMethod.Get))
 {
-	<hr />
-	<div class="form-horizontal">
-		<div class="form-group">
-			@Html.LabelFor(model => model.Mes, htmlAttributes: new { @class = "control-label col-md-2" })
-			<div class="col-md-10">
-				@Html.DropDownList("Mes", null, htmlAttributes: new { @class = "form-control" })
-			</div>
-		</div>
+    <div class="form-group row">
+            @Html.LabelFor(model => model.Mes, htmlAttributes: new { @class = "control-label col-md-1" })
+        <div class="col-sm-10">
+            @Html.DropDownList("Mes", null, htmlAttributes: new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(model => model.Ano, htmlAttributes: new { @class = "control-label col-md-1" })
+        <div class="col-sm-10">
+            @Html.EditorFor(model => model.Ano, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Ano, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <input type="submit" value="Pesquisar" class="btn btn-primary" />
+        </div>
+    </div>
+    @*<div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Mes, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Mes", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
 
-		<div class="form-group">
-			@Html.LabelFor(model => model.Ano, htmlAttributes: new { @class = "control-label col-md-2" })
-			<div class="col-md-10">
-				@Html.EditorFor(model => model.Ano, new { htmlAttributes = new { @class = "form-control" } })
-				@Html.ValidationMessageFor(model => model.Ano, "", new { @class = "text-danger" })
-			</div>
-		</div>
-	</div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Ano, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Ano, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Ano, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
 
-	<div class="form-group">
-		<div class="col-md-offset-2 col-md-10">
-			<input type="submit" value="Pesquisar" class="btn btn-primary" />
-		</div>
-	</div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Pesquisar" class="btn btn-primary" />
+        </div>
+    </div>*@
 }
 <h4>
-	Relatório Sumariado
+    Relatório Sumariado
 </h4>
 <table class="table">
-	<tr>
-		<th>
-			@Html.DisplayNameFor(model => model.nVendas)
-		</th>
-		<th>
-			@Html.DisplayNameFor(model => model.totalVendas)
-		</th>
-		<th>
-			@Html.DisplayNameFor(model => model.nClientes)
-		</th>
-	</tr>
-	<tr>
-		<td>
-			@Html.DisplayFor(model => model.nVendas)
-		</td>
-		<td>
-			@Html.DisplayFor(model => model.totalVendas)
-		</td>
-		<td>
-			@Html.DisplayFor(model => model.nClientes)
-		</td>
-	</tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nVendas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.totalVendas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nClientes)
+        </th>
+    </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(model => model.nVendas)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.totalVendas)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.nClientes)
+        </td>
+    </tr>
 </table>
 <h4>
-	@Html.DisplayNameFor(model => model.TopVendas)
+    @Html.DisplayNameFor(model => model.TopVendas)
 </h4>
 <table class="table">
-	<tr>
-		<th>
-			@Html.DisplayNameFor(_ => Model.TopVendas[0].NomeProduto)
-		</th>
-		<th>
-			@Html.DisplayNameFor(_ => Model.TopVendas[0].UnidadesVendidas)
-		</th>
-		<th>
-			@Html.DisplayNameFor(_ => Model.TopVendas[0].TotalVendas)
-		</th>
-		<th>
-			@Html.DisplayNameFor(_ => Model.TopVendas[0].PercentagemFaturacao)
-		</th>
-	</tr>
-	@foreach (var item in Model.TopVendas)
-	{
-		<tr>
-			<td>
-				@Html.DisplayFor(modelItem => item.NomeProduto)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.UnidadesVendidas)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.TotalVendas)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.PercentagemFaturacao)
-			</td>
-		</tr>
-	}
+    <tr>
+        <th>
+            @Html.DisplayNameFor(_ => Model.TopVendas[0].NomeProduto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(_ => Model.TopVendas[0].UnidadesVendidas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(_ => Model.TopVendas[0].TotalVendas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(_ => Model.TopVendas[0].PercentagemFaturacao)
+        </th>
+    </tr>
+    @foreach (var item in Model.TopVendas)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomeProduto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnidadesVendidas)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalVendas)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PercentagemFaturacao)
+            </td>
+        </tr>
+    }
 </table>
 <h4>
-	@Html.DisplayNameFor(model => model.Vendas)
+    @Html.DisplayNameFor(model => model.Vendas)
 </h4>
 <table class="table">
-	<tr>
-		<th>
-			Produto
-		</th>
-		<th>
-			Preço
-		</th>
-		<th>
-			Unidades
-		</th>
-		<th>
-			DataConfirmada
-		</th>
-		<th>
-			Subtotal
-		</th>
-	</tr>
-	@if(Model.Vendas.Count() == 0)
-	{
-		<tr>
-			<td colspan="5">
-				Não existem registos correspondentes aos critérios
-			</td>
-		</tr>
-	}
-	@foreach(var item in Model.Vendas)
-	{
-		<tr>
-			<td>
-				@Html.DisplayFor(modelItem => item.Produto.Nome)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Produto.Preco)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Unidades)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.DataConfirmada)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Subtotal)
-			</td>
-		</tr>
-	}
+    <tr>
+        <th>
+            Produto
+        </th>
+        <th>
+            Preço
+        </th>
+        <th>
+            Unidades
+        </th>
+        <th>
+            DataConfirmada
+        </th>
+        <th>
+            Subtotal
+        </th>
+    </tr>
+    @if (Model.Vendas.Count() == 0)
+    {
+        <tr>
+            <td colspan="5">
+                Não existem registos correspondentes aos critérios
+            </td>
+        </tr>
+    }
+    @foreach (var item in Model.Vendas)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Produto.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Produto.Preco)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Unidades)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataConfirmada)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subtotal)
+            </td>
+        </tr>
+    }
 
 </table>

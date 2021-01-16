@@ -4,10 +4,10 @@
     ViewBag.Title = "Funcionários";
 }
 
-<h3>Lista de Funcionários</h3>
-
+<br />
+<br />
 <p>
-    @Html.ActionLink("Registar Novo Funcionario", "RegistarFuncionario")
+    @Html.ActionLink("Novo Funcionario", "RegistarFuncionario", null, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
@@ -30,8 +30,9 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.ActionLink("Detalhes", "DetalhesFuncionario", new { id = item.Id })
-                @Html.ActionLink("Apagar", "ApagarFuncionario", new { id = item.Id })
+                @Html.ActionLink("Editar", "EditarFuncionario", new { id = item.Id }, new { @class = "btn btn-warning" })&nbsp;
+                @Html.ActionLink("Detalhes", "Detalhes", new { id = item.Id }, new { @class = "btn btn-info" })&nbsp;
+                @Html.ActionLink("Apagar", "ApagarFuncionario", new { id = item.Id }, new { @class = "btn btn-danger" })
             </td>
         </tr>
     }

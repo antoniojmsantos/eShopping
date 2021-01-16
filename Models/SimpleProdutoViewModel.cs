@@ -14,8 +14,14 @@ namespace TP_PWEB.Models
 		public string NomeProduto { get; set; }
 
 		[Display(Name = "Antes")]
+		[DataType(DataType.Currency)]
+		[DisplayFormat(ApplyFormatInEditMode = true,
+			DataFormatString = "{0:c}")]
 		public decimal PrecoAntigo { get; set; }
 		[Display(Name = "Depois")]
+		[DataType(DataType.Currency)]
+		[DisplayFormat(ApplyFormatInEditMode = true,
+			DataFormatString = "{0:c}")]
 		public decimal PrecoNovo { get; set; }
 
 		[Display(Name = "Desconto de (%)")]

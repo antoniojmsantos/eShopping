@@ -19,6 +19,9 @@ namespace TP_PWEB.Models
         [Display(Name = "Promocao (%)")]
         public int Percentagem { get; set; }
 
+        [DataType(DataType.Currency)]
+        [DisplayFormat(ApplyFormatInEditMode = true,
+            DataFormatString = "{0:c}")]
         public decimal PrecoNovo { get; set; }
 
         public bool Ativa { get; set; }

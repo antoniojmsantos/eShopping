@@ -3,8 +3,9 @@
 	ViewBag.Title = "(" + Session["nItens"] + ") Carrinho ";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Remover Item</h2>
-<p>Tem a certeza que pretende remover o produto do carrinho?</p>
+<br />
+<h2>Tem a certeza que pretende remover o produto do carrinho?</h2>
+
 <div>
 	<hr />
 	<dl class="dl-horizontal">
@@ -24,8 +25,8 @@
 		<input type="hidden" name="position" value="@ViewBag.position" />
 
 		<div class="form-actions no-color">
-			<input type="submit" value="Delete" class="btn btn-primary" />
-			@Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+			<input type="submit" value="Apagar" class="btn btn-primary" />
+			@Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
 		</div>
 	}
 </div>

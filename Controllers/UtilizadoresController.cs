@@ -41,7 +41,7 @@ namespace TP_PWEB.Controllers
             return View(funcionariosEmpresa);
         }
 
-        public ActionResult DetalhesFuncionario(string id)
+        public ActionResult Detalhes(string id)
         {
             if (id == null)
             {
@@ -55,22 +55,9 @@ namespace TP_PWEB.Controllers
             return View(applicationUser);
         }
 
-        public ActionResult DetalhesCliente(string id)
-		{
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ApplicationUser applicationUser = db.Users.Find(id);
-            if (applicationUser == null)
-            {
-                return HttpNotFound();
-            }
-            return View(applicationUser);
-        }
 
         // GET: Clientes/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult EditarFuncionario(string id)
         {
             if (id == null)
             {
@@ -90,11 +77,10 @@ namespace TP_PWEB.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,NomeCompleto,Email")] ApplicationUser applicationUser)
+        public ActionResult EditarFuncionario([Bind(Include = "Id,NomeCompleto,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AcessFailedCount,UserName")] ApplicationUser applicationUser)
         {
             if (ModelState.IsValid)
             {
-                applicationUser.UserName = applicationUser.Email;
                 db.Entry(applicationUser).State = EntityState.Modified;
                 db.SaveChanges();
                 if (User.IsInRole("Admin"))
@@ -107,23 +93,27 @@ namespace TP_PWEB.Controllers
         [Authorize(Roles = "Empresa")]
         public ActionResult RegistarFuncionario()
         {
+            
+            CreateUserViewModel model = new CreateUserViewModel();
             var userId = User.Identity.GetUserId();
-            ViewBag.Empresa = db.Empresas.Where(e => e.ApplicationUserId == userId).FirstOrDefault().NomeEmpresa;
-            return View();
+            model.Empresa = db.Empresas.Where(e => e.ApplicationUserId == userId).FirstOrDefault().NomeEmpresa;
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Empresa")]
-        public async Task<ActionResult> RegistarFuncionario(CreateViewModel model)
+        public async Task<ActionResult> RegistarFuncionario(CreateUserViewModel model)
         {
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser
                 {
                     NomeCompleto = model.NomeCompleto,
                     UserName = model.Email,
-                    Email = model.Email
+                    Email = model.Email,
+                    PasswordHash = model.Password
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
 
@@ -147,12 +137,16 @@ namespace TP_PWEB.Controllers
                         return RedirectToAction("ListaFuncionarios");
                     } else
 					{
+                        var userId = User.Identity.GetUserId();
+                        model.Empresa = db.Empresas.Where(e => e.ApplicationUserId == userId).FirstOrDefault().NomeEmpresa;
                         ModelState.AddModelError("", "Empresa não existe.");
                         return View(model);
 					}
                 }
                 else
                 {
+                    var userId = User.Identity.GetUserId();
+                    model.Empresa = db.Empresas.Where(e => e.ApplicationUserId == userId).FirstOrDefault().NomeEmpresa;
                     ModelState.AddModelError("", "Já existe um utilizador com este email.");
                     return View(model);
                 }

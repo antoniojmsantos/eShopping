@@ -12,6 +12,7 @@ namespace TP_PWEB.Models
         [Key]
         public int IdCategoria { get; set; }
         [Column("Nome")]
+        [Display(Name = "Nome")]
         public string NomeCategoria { get; set; }
     }
 }

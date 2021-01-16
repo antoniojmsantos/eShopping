@@ -3,11 +3,9 @@
 @{
     ViewBag.Title = "Lista de Categorias";
 }
-
-<h2>Lista de Categorias</h2>
-
+<br /><br />
 <p>
-    @Html.ActionLink("Criar Nova", "Create")
+    @Html.ActionLink("Nova Categoria", "Create", null, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
@@ -23,9 +21,9 @@
             @Html.DisplayFor(modelItem => item.NomeCategoria)
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.IdCategoria }) |
-            @Html.ActionLink("Detalhes", "Details", new { id=item.IdCategoria }) |
-            @Html.ActionLink("Apagar", "Delete", new { id=item.IdCategoria })
+            @Html.ActionLink("Editar", "Edit", new { id = item.IdCategoria }, new { @class = "btn btn-warning" }) &nbsp;
+            @Html.ActionLink("Detalhes", "Details", new { id = item.IdCategoria }, new { @class = "btn btn-info" }) &nbsp;
+            @Html.ActionLink("Apagar", "Delete", new { id = item.IdCategoria }, new { @class = "btn btn-danger" })
         </td>
     </tr>
 }

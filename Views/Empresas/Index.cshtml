@@ -4,8 +4,8 @@
     ViewBag.Title = "Lista de Empresas";
 }
 
-<h3>Lista de Empresas</h3>
-
+<br />
+<br />
 
 <table class="table">
     <tr>
@@ -29,8 +29,8 @@
             
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.IdEmpresa }) |
-            @Html.ActionLink("Detalhes", "Details", new { id=item.IdEmpresa })
+            @Html.ActionLink("Editar", "Edit", new { id = item.IdEmpresa }, new { @class = "btn btn-warning" }) &nbsp;
+            @Html.ActionLink("Detalhes", "Details", new { id = item.IdEmpresa }, new { @class = "btn btn-info" })
         </td>
     </tr>
 }
