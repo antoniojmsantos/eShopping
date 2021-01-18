@@ -169,17 +169,21 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CarrinhoController.cs" />
     <Compile Include="Controllers\CategoriasController.cs" />
     <Compile Include="Controllers\ComprasController.cs" />
+    <Compile Include="Controllers\EmpresasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InitAdminController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProdutoesController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\UsersAdminController.cs" />
+    <Compile Include="Controllers\UtilizadoresController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HtmlHelpers\Helper.cs" />
     <Compile Include="Migrations\202101060300537_InitialCreate.cs" />
     <Compile Include="Migrations\202101060300537_InitialCreate.Designer.cs">
       <DependentUpon>202101060300537_InitialCreate.cs</DependentUpon>
@@ -220,14 +224,83 @@
     <Compile Include="Migrations\202101080146417_users-update.Designer.cs">
       <DependentUpon>202101080146417_users-update.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101081400489_addStockEUnidades.cs" />
+    <Compile Include="Migrations\202101081400489_addStockEUnidades.Designer.cs">
+      <DependentUpon>202101081400489_addStockEUnidades.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101081701483_fixCompraUserId.cs" />
+    <Compile Include="Migrations\202101081701483_fixCompraUserId.Designer.cs">
+      <DependentUpon>202101081701483_fixCompraUserId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101081703387_fixCompraUserId2.cs" />
+    <Compile Include="Migrations\202101081703387_fixCompraUserId2.Designer.cs">
+      <DependentUpon>202101081703387_fixCompraUserId2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101082046224_fix.cs" />
+    <Compile Include="Migrations\202101082046224_fix.Designer.cs">
+      <DependentUpon>202101082046224_fix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101082346380_addEstadoAndData.cs" />
+    <Compile Include="Migrations\202101082346380_addEstadoAndData.Designer.cs">
+      <DependentUpon>202101082346380_addEstadoAndData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101082355294_addNewDatesAndProductPriceToDecimal.cs" />
+    <Compile Include="Migrations\202101082355294_addNewDatesAndProductPriceToDecimal.Designer.cs">
+      <DependentUpon>202101082355294_addNewDatesAndProductPriceToDecimal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101091921056_cat_produto.cs" />
+    <Compile Include="Migrations\202101091921056_cat_produto.Designer.cs">
+      <DependentUpon>202101091921056_cat_produto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101092253283_promocao.cs" />
+    <Compile Include="Migrations\202101092253283_promocao.Designer.cs">
+      <DependentUpon>202101092253283_promocao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101102149107_fixDatabase.cs" />
+    <Compile Include="Migrations\202101102149107_fixDatabase.Designer.cs">
+      <DependentUpon>202101102149107_fixDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101120003087_fixDatabaseNew.cs" />
+    <Compile Include="Migrations\202101120003087_fixDatabaseNew.Designer.cs">
+      <DependentUpon>202101120003087_fixDatabaseNew.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101120200295_changeDataToLinhaCOmpra.cs" />
+    <Compile Include="Migrations\202101120200295_changeDataToLinhaCOmpra.Designer.cs">
+      <DependentUpon>202101120200295_changeDataToLinhaCOmpra.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101120240078_addDataEntrega.cs" />
+    <Compile Include="Migrations\202101120240078_addDataEntrega.Designer.cs">
+      <DependentUpon>202101120240078_addDataEntrega.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101130015287_fixPromocao.cs" />
+    <Compile Include="Migrations\202101130015287_fixPromocao.Designer.cs">
+      <DependentUpon>202101130015287_fixPromocao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101130225508_produtoApagadoNew.cs" />
+    <Compile Include="Migrations\202101130225508_produtoApagadoNew.Designer.cs">
+      <DependentUpon>202101130225508_produtoApagadoNew.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101150305202_nomeEmpresaUnique.cs" />
+    <Compile Include="Migrations\202101150305202_nomeEmpresaUnique.Designer.cs">
+      <DependentUpon>202101150305202_nomeEmpresaUnique.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Categoria.cs" />
     <Compile Include="Models\Compra.cs" />
     <Compile Include="Models\Empresa.cs" />
+    <Compile Include="Models\EmpresaFuncionario.cs" />
+    <Compile Include="Models\EstatisticasViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ItemCarrinho.cs" />
+    <Compile Include="Models\LinhaCompra.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Produto.cs" />
+    <Compile Include="Models\ProdutoViewModel.cs" />
+    <Compile Include="Models\Promocao.cs" />
+    <Compile Include="Models\HomeViewModel.cs" />
+    <Compile Include="Models\SimpleProdutoViewModel.cs" />
+    <Compile Include="Models\UtilizadorViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -240,6 +313,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\custom-bootstrap.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -247,6 +321,9 @@
     <Content Include="ReadMe.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include=".gitignore" />
+    <Content Include="README.md" />
+    <Content Include="CHANGELOG.md" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Register.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -305,20 +382,43 @@
     <Content Include="Views\InitAdmin\Index.cshtml" />
     <Content Include="Views\InitAdmin\Error.cshtml" />
     <Content Include="Views\Produtoes\Create.cshtml" />
-    <Content Include="Views\Produtoes\Delete.cshtml" />
-    <Content Include="Views\Produtoes\Details.cshtml" />
-    <Content Include="Views\Produtoes\Edit.cshtml" />
+    <Content Include="Views\Produtoes\Apagar.cshtml" />
     <Content Include="Views\Produtoes\Index.cshtml" />
     <Content Include="Views\Categorias\Create.cshtml" />
     <Content Include="Views\Categorias\Delete.cshtml" />
     <Content Include="Views\Categorias\Details.cshtml" />
     <Content Include="Views\Categorias\Edit.cshtml" />
     <Content Include="Views\Categorias\Index.cshtml" />
-    <Content Include="Views\Compras\Create.cshtml" />
-    <Content Include="Views\Compras\Delete.cshtml" />
-    <Content Include="Views\Compras\Details.cshtml" />
-    <Content Include="Views\Compras\Edit.cshtml" />
-    <Content Include="Views\Compras\Index.cshtml" />
+    <Content Include="Views\Produtoes\Editar.cshtml" />
+    <Content Include="Views\Empresas\Create.cshtml" />
+    <Content Include="Views\Empresas\Delete.cshtml" />
+    <Content Include="Views\Empresas\Details.cshtml" />
+    <Content Include="Views\Empresas\Edit.cshtml" />
+    <Content Include="Views\Empresas\Estatisticas.cshtml" />
+    <Content Include="Views\Empresas\Index.cshtml" />
+    <Content Include="Views\Utilizadores\ListaClientes.cshtml" />
+    <Content Include="Views\Utilizadores\ListaFuncionarios.cshtml" />
+    <Content Include="Views\Carrinho\AdicionarItem.cshtml" />
+    <Content Include="Views\Carrinho\Index.cshtml" />
+    <Content Include="Views\Carrinho\RemoverItem.cshtml" />
+    <Content Include="Views\Carrinho\EditarItem.cshtml" />
+    <Content Include="Views\Compras\ListaComprasCliente.cshtml" />
+    <Content Include="Views\Compras\Finalizar.cshtml" />
+    <Content Include="Views\Compras\DetalhesCompra.cshtml" />
+    <Content Include="Views\Utilizadores\DetalhesFuncionario.cshtml" />
+    <Content Include="Views\Utilizadores\ApagarFuncionario.cshtml" />
+    <Content Include="Views\Utilizadores\RegistarFuncionario.cshtml" />
+    <Content Include="Views\Compras\ListaComprasFuncionario.cshtml" />
+    <Content Include="Views\Compras\Confirmar.cshtml" />
+    <Content Include="Views\Compras\DetalhesLinhaCompra.cshtml" />
+    <Content Include="Views\Compras\MarcarEntregue.cshtml" />
+    <Content Include="Views\Utilizadores\Edit.cshtml" />
+    <Content Include="Views\Utilizadores\DetalhesCliente.cshtml" />
+    <Content Include="Views\Produtoes\CriarPromocao.cshtml" />
+    <Content Include="Views\Produtoes\RemoverPromocao.cshtml" />
+    <Content Include="Views\Produtoes\Detalhes.cshtml" />
+    <Content Include="Views\Utilizadores\Detalhes.cshtml" />
+    <Content Include="Views\Utilizadores\EditarFuncionario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202101060300537_InitialCreate.resx">
@@ -350,6 +450,51 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101080146417_users-update.resx">
       <DependentUpon>202101080146417_users-update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101081400489_addStockEUnidades.resx">
+      <DependentUpon>202101081400489_addStockEUnidades.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101081701483_fixCompraUserId.resx">
+      <DependentUpon>202101081701483_fixCompraUserId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101081703387_fixCompraUserId2.resx">
+      <DependentUpon>202101081703387_fixCompraUserId2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101082046224_fix.resx">
+      <DependentUpon>202101082046224_fix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101082346380_addEstadoAndData.resx">
+      <DependentUpon>202101082346380_addEstadoAndData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101082355294_addNewDatesAndProductPriceToDecimal.resx">
+      <DependentUpon>202101082355294_addNewDatesAndProductPriceToDecimal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101091921056_cat_produto.resx">
+      <DependentUpon>202101091921056_cat_produto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101092253283_promocao.resx">
+      <DependentUpon>202101092253283_promocao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101102149107_fixDatabase.resx">
+      <DependentUpon>202101102149107_fixDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101120003087_fixDatabaseNew.resx">
+      <DependentUpon>202101120003087_fixDatabaseNew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101120200295_changeDataToLinhaCOmpra.resx">
+      <DependentUpon>202101120200295_changeDataToLinhaCOmpra.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101120240078_addDataEntrega.resx">
+      <DependentUpon>202101120240078_addDataEntrega.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101130015287_fixPromocao.resx">
+      <DependentUpon>202101130015287_fixPromocao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101130225508_produtoApagadoNew.resx">
+      <DependentUpon>202101130225508_produtoApagadoNew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101150305202_nomeEmpresaUnique.resx">
+      <DependentUpon>202101150305202_nomeEmpresaUnique.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
